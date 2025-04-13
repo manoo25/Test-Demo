@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة آداب الطعام</title>
+    <style>
+        :root {
+            --main-color: #FF6B6B;
+            --secondary-color: #FFD166;
+            --light-color: #FFF5F5;
+            --dark-color: #EF476F;
+            --correct-color: #06D6A0;
+            --wrong-color: #EF9A9A;
+        }
+        
+        body {
+            font-family: 'Tajawal', 'Arial', sans-serif;
+            background-color: var(--light-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: var(--dark-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+        }
+        
+        .game-container {
+            background-color: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border: 4px solid var(--secondary-color);
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .scenario {
+            background-color: var(--light-color);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        
+        .option-btn {
+            background-color: white;
+            border: 3px solid var(--secondary-color);
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #333;
+            text-align: right;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .option-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .option-btn.correct {
+            background-color: var(--correct-color);
+            border-color: #06D6A0;
+            color: white;
+        }
+        
+        .option-btn.incorrect {
+            background-color: var(--wrong-color);
+            border-color: #E57373;
+            color: white;
+        }
+        
+        .feedback {
+            font-size: 1.2rem;
+            font-weight: bold;
+            min-height: 40px;
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        
+        .feedback.correct {
+            background-color: #E6F7F2;
+            color: var(--correct-color);
+        }
+        
+        .feedback.incorrect {
+            background-color: #FFEBEE;
+            color: var(--wrong-color);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .action-btn {
+            background-color: var(--main-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .action-btn:hover {
+            background-color: var(--dark-color);
+            transform: scale(1.05);
+        }
+        
+        .action-btn:disabled {
+            background-color: #CCCCCC;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .character {
+            font-size: 4rem;
+            margin: 10px 0;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background-color: #EEE;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--main-color);
+            border-radius: 5px;
+            transition: width 0.4s ease;
+            width: 0%;
+        }
+        
+        .celebration {
+            position: absolute;
+            font-size: 2rem;
+            pointer-events: none;
+            animation: float-up 2s ease-out forwards;
+            z-index: 10;
+        }
+        
+        @keyframes float-up {
+            0% { transform: translateY(0) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-150px) scale(1.5); opacity: 0; }
+        }
+        
+        .food-icon {
+            font-size: 2rem;
+            margin: 0 5px;
+        }
+        
+        @media (max-width: 500px) {
+            .scenario {
+                font-size: 1rem;
+                min-height: 150px;
+            }
+            
+            .option-btn {
+                padding: 12px;
+                font-size: 1rem;
+            }
+            .game-container {
+            
+            max-width: 350px;
+        }
+        
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>🍽️ لعبة آداب الطعام 🍽️</h1>
+    
+    <div class="game-container">
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        
+        <div class="character" id="character">👦</div>
+        
+        <div class="scenario" id="scenario">
+            <!-- سيتم عرض السيناريوهات هنا -->
+        </div>
+        
+        <div class="feedback" id="feedback"></div>
+        
+        <div class="options-container" id="options-container">
+            <!-- سيتم عرض الخيارات هنا -->
+        </div>
+        
+        <div class="controls">
+            <button class="action-btn" id="next-btn" disabled>التالي</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // عناصر واجهة المستخدم
+            const scenarioEl = document.getElementById('scenario');
+            const feedbackEl = document.getElementById('feedback');
+            const optionsContainer = document.getElementById('options-container');
+            const nextBtn = document.getElementById('next-btn');
+            const progressBar = document.getElementById('progress-bar');
+            const characterEl = document.getElementById('character');
+            const gameContainer = document.querySelector('.game-container');
+            
+            // سيناريوهات آداب الطعام
+            const scenarios = [
+                {
+                    question: "عند الجلوس لتناول الطعام، ماذا يجب أن نقول قبل البدء؟",
+                    options: [
+                        "لا شيء، نبدأ بالأكل مباشرة",
+                        "بسم الله الرحمن الرحيم",
+                        "اسم المطعم الذي نأكل فيه",
+                        "أسماء الأطعمة التي أمامنا"
+                    ],
+                    correctAnswer: 1,
+                    feedback: "الصحيح! نبدأ طعامنا بذكر اسم الله (بسم الله الرحمن الرحيم)"
+                },
+                {
+                    question: "ماذا تفعل إذا عطست أثناء الطعام؟",
+                    options: [
+                        "أكمل الأكل دون أي شيء",
+                        "أقول 'الحمد لله' وأغطي فمي",
+                        "أعطس على الطعام",
+                        "أصرخ بصوت عال"
+                    ],
+                    correctAnswer: 1,
+                    feedback: "أحسنت! يجب أن نقول 'الحمد لله' ونغطي أفواهنا عند العطس"
+                },
+                {
+                    question: "ما هو السلوك الصحيح عند تناول الطعام مع العائلة؟",
+                    options: [
+                        "الأكل بسرعة قبل الآخرين",
+                        "بدء الأكل قبل الكبار",
+                        "الانتظار حتى يبدأ الكبار",
+                        "الأكل من صحن شخص آخر"
+                    ],
+                    correctAnswer: 2,
+                    feedback: "صحيح! من آداب الطعام أن ننتظر حتى يبدأ الكبار بالأكل"
+                },
+                {
+                    question: "ماذا تفعل إذا أردت تناول شيء بعيد عنك؟",
+                    options: [
+                        "أمد يدي فوق الصحون لأجل الوصول إليه",
+                        "أطلب من شخص قريب أن يناوله لي",
+                        "أقف وأمشي حول الطاولة لأجل الوصول إليه",
+                        "أصرخ ليجلبوه لي"
+                    ],
+                    correctAnswer: 1,
+                    feedback: "جيد! نطلب من الجالسين قريباً من الطعام أن يناوله لنا بلطف"
+                },
+                {
+                    question: "كيف يجب أن تكون طريقة الجلوس أثناء الأكل؟",
+                    options: [
+                        "الوقوف بجانب الطاولة",
+                        "الجلوس بشكل مائل وغير مستقر",
+                        "الجلوس باعتدال واحترام",
+                        "الاستلقاء على الأرض"
+                    ],
+                    correctAnswer: 2,
+                    feedback: "ممتاز! الجلوس باعتدال واحترام من آداب الطعام المهمة"
+                },
+                {
+                    question: "ماذا تفعل إذا انسكب بعض الطعام على الطاولة؟",
+                    options: [
+                        "أتركه دون اهتمام",
+                        "أنظفه بمناديل أو أطلب المساعدة",
+                        "أدفعه بأصابعي إلى الأرض",
+                        "أستخدم ملابسي لتنظيفه"
+                    ],
+                    correctAnswer: 1,
+                    feedback: "صحيح! يجب أن ننظف ما انسكب من طعام باستخدام المناديل"
+                },
+                {
+                    question: "ما هو الوقت المناسب للتحدث أثناء الطعام؟",
+                    options: [
+                        "عندما يكون فمي ممتلئاً بالطعام",
+                        "عند عدم وجود طعام في فمي",
+                        "التحدث بصوت عال طوال الوقت",
+                        "عدم التحدث مطلقاً أثناء الأكل"
+                    ],
+                    correctAnswer: 1,
+                    feedback: "أحسنت! نتحدث عندما لا يكون هناك طعام في أفواهنا"
+                },
+                {
+                    question: "كيف يجب أن تكون سرعة الأكل؟",
+                    options: [
+                        "بسرعة كبيرة لإنهاء الطعام أولاً",
+                        "ببطء شديد حتى يبرد الطعام",
+                        "بسرعة معتدلة ومضغ جيد",
+                        "بالطريقة التي أريدها دون قواعد"
+                    ],
+                    correctAnswer: 2,
+                    feedback: "جيد! الأكل بسرعة معتدلة مع مضغ الطعام جيداً مفيد للهضم"
+                },
+                {
+                    question: "ماذا نقول عند الانتهاء من الطعام؟",
+                    options: [
+                        "لقد شبعتم",
+                        "الحمد لله رب العالمين",
+                        "الطعام كان لذيذاً",
+                        "أريد المزيد"
+                    ],
+                    correctAnswer: 1,
+                    feedback: "صحيح! نحمد الله بعد الانتهاء من الطعام (الحمد لله رب العالمين)"
+                },
+                {
+                    question: "ماذا تفعل إذا لم يعجبك نوع من الطعام؟",
+                    options: [
+                        "أرفضه بعنف وأقول إنه سيء",
+                        "أتذوقه وأشكر من قدمه لي",
+                        "أرميه على الطاولة",
+                        "أشتكي بصوت عال"
+                    ],
+                    correctAnswer: 1,
+                    feedback: "ممتاز! نتذوق الطعام ونشكر من قدمه لنا حتى لو لم يعجبنا كثيراً"
+                }
+            ];
+            
+            // حالة اللعبة
+            let currentScenario = 0;
+            let score = 0;
+            let gameActive = true;
+            
+            // تهيئة اللعبة
+            function initGame() {
+                currentScenario = 0;
+                score = 0;
+                loadScenario();
+                changeCharacter();
+            }
+            
+            // تحميل السيناريو الحالي
+            function loadScenario() {
+                if (currentScenario >= scenarios.length) {
+                    endGame();
+                    return;
+                }
+                
+                const scenario = scenarios[currentScenario];
+                scenarioEl.textContent = scenario.question;
+                
+                // عرض الخيارات
+                displayOptions(scenario.options);
+                
+                // إعادة تعيين الحالة
+                feedbackEl.textContent = '';
+                feedbackEl.className = 'feedback';
+                nextBtn.disabled = true;
+                gameActive = true;
+                
+                updateProgress();
+            }
+            
+            // عرض خيارات الإجابة
+            function displayOptions(options) {
+                optionsContainer.innerHTML = '';
+                
+                options.forEach((option, index) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.textContent = option;
+                    btn.addEventListener('click', () => handleAnswer(index, btn));
+                    optionsContainer.appendChild(btn);
+                });
+            }
+            
+            // معالجة الإجابة
+            function handleAnswer(selectedIndex, btn) {
+                if (!gameActive) return;
+                
+                gameActive = false;
+                const scenario = scenarios[currentScenario];
+                
+                if (selectedIndex === scenario.correctAnswer) {
+                    // إجابة صحيحة
+                    btn.classList.add('correct');
+                    feedbackEl.textContent = scenario.feedback;
+                    feedbackEl.classList.add('correct');
+                    score += 10;
+                    createCelebration();
+                    changeCharacter('happy');
+                } else {
+                    // إجابة خاطئة
+                    btn.classList.add('incorrect');
+                    feedbackEl.textContent = scenario.feedback;
+                    feedbackEl.classList.add('incorrect');
+                    changeCharacter('sad');
+                    
+                    // إظهار الإجابة الصحيحة
+                    const correctBtn = optionsContainer.children[scenario.correctAnswer];
+                    correctBtn.classList.add('correct');
+                }
+                
+                nextBtn.disabled = false;
+            }
+            
+            // تغيير تعبير الشخصية
+            function changeCharacter(mood) {
+                const characters = {
+                    normal: ['👦', '👧', '🧒', '👩', '👨'],
+                    happy: ['😊', '😄', '🤗', '😍', '🥳'],
+                    sad: ['😔', '😟', '😕', '🙁', '☹️']
+                };
+                
+                let set = characters.normal;
+                if (mood === 'happy') set = characters.happy;
+                if (mood === 'sad') set = characters.sad;
+                
+                const randomChar = set[Math.floor(Math.random() * set.length)];
+                characterEl.textContent = randomChar;
+            }
+            
+            // إنشاء تأثيرات الاحتفال
+            function createCelebration() {
+                const emojis = ['🎉', '✨', '🌟', '🎈', '👍'];
+                
+                for (let i = 0; i < 5; i++) {
+                    const celeb = document.createElement('div');
+                    celeb.className = 'celebration';
+                    celeb.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    celeb.style.left = `${Math.random() * 80 + 10}%`;
+                    celeb.style.bottom = '20%';
+                    celeb.style.animationDelay = `${i * 0.2}s`;
+                    gameContainer.appendChild(celeb);
+                    
+                    setTimeout(() => {
+                        celeb.remove();
+                    }, 2000);
+                }
+            }
+            
+            // الانتقال للسؤال التالي
+            function nextScenario() {
+                currentScenario++;
+                loadScenario();
+                changeCharacter();
+            }
+            
+            // نهاية اللعبة
+            function endGame() {
+                scenarioEl.textContent = `🎊 مبروك! أكملت جميع الأسئلة بنقاط: ${score}`;
+                optionsContainer.innerHTML = '';
+                nextBtn.textContent = 'العب مرة أخرى';
+                nextBtn.onclick = initGame;
+                characterEl.textContent = '🏆';
+                
+                // عرض نتيجة الأداء
+                let performance = '';
+                if (score >= 90) {
+                    performance = 'رائع! أنت خبير في آداب الطعام!';
+                } else if (score >= 60) {
+                    performance = 'جيد جداً! لديك معرفة جيدة بآداب الطعام';
+                } else {
+                    performance = 'حاول مرة أخرى لتحسين معرفتك بآداب الطعام';
+                }
+                
+                feedbackEl.textContent = performance;
+                feedbackEl.className = 'feedback correct';
+            }
+            
+            // تحديث شريط التقدم
+            function updateProgress() {
+                const progress = (currentScenario / scenarios.length) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+            
+            // إضافة مستمعين للأحداث
+            nextBtn.addEventListener('click', nextScenario);
+            
+            // بدء اللعبة
+            initGame();
+        });
+    </script>
+</body>
+</html>

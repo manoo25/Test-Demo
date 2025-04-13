@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة الجمع والطرح للأطفال</title>
+    <style>
+        :root {
+            --primary-color: #FF6B6B;
+            --secondary-color: #FFD166;
+            --light-color: #FFF5F5;
+            --dark-color: #EF476F;
+            --correct-color: #06D6A0;
+            --wrong-color: #EF9A9A;
+        }
+        
+        body {
+            font-family: 'Tajawal', 'Arial', sans-serif;
+            background-color: var(--light-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .game-container {
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 4px solid var(--secondary-color);
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            background-color: var(--secondary-color);
+            padding: 10px 20px;
+            border-radius: 50px;
+            color: #880E4F;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .score, .level {
+            font-size: 1.1rem;
+        }
+        
+        .problem-container {
+            background-color: var(--light-color);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .problem {
+            font-size: 3rem;
+            color: var(--dark-color);
+            margin: 10px 0;
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .option-btn {
+            background-color: white;
+            border: 3px solid var(--secondary-color);
+            border-radius: 15px;
+            padding: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #333;
+        }
+        
+        .option-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .option-btn.correct {
+            background-color: var(--correct-color);
+            border-color: #06D6A0;
+            color: white;
+        }
+        
+        .option-btn.incorrect {
+            background-color: var(--wrong-color);
+            border-color: #E57373;
+            color: white;
+        }
+        
+        .feedback {
+            font-size: 1.3rem;
+            font-weight: bold;
+            min-height: 40px;
+            margin: 15px 0;
+            color: var(--primary-color);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .action-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .action-btn:hover {
+            background-color: var(--dark-color);
+            transform: scale(1.05);
+        }
+        
+        .action-btn:disabled {
+            background-color: #CCCCCC;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .operation-toggle {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .toggle-btn {
+            background-color: var(--light-color);
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .toggle-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .toggle-btn:first-child {
+            border-radius: 50px 0 0 50px;
+        }
+        
+        .toggle-btn:last-child {
+            border-radius: 0 50px 50px 0;
+        }
+        
+        .celebration {
+            position: absolute;
+            font-size: 2rem;
+            pointer-events: none;
+            animation: float-up 2s ease-out forwards;
+            z-index: 10;
+        }
+        
+        @keyframes float-up {
+            0% { transform: translateY(0) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-150px) scale(1.5); opacity: 0; }
+        }
+        
+        @media (max-width: 500px) {
+            .options-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .problem {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <h1>🎲 لعبة الجمع والطرح 🎲</h1>
+        
+        <div class="game-header">
+            <div class="score">النقاط: <span id="score">0</span></div>
+            <div class="level">المستوى: <span id="level">1</span></div>
+        </div>
+        
+        <div class="operation-toggle">
+            <button class="toggle-btn active" id="addition-btn">جمع (+)</button>
+            <button class="toggle-btn" id="subtraction-btn">طرح (-)</button>
+        </div>
+        
+        <div class="problem-container">
+            <div class="problem" id="problem">5 + 3 = ?</div>
+        </div>
+        
+        <div class="feedback" id="feedback"></div>
+        
+        <div class="options-container" id="options-container">
+            <!-- سيتم إضافة الخيارات هنا -->
+        </div>
+        
+        <div class="controls">
+            <button class="action-btn" id="next-btn">السؤال التالي</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // عناصر واجهة المستخدم
+            const problemEl = document.getElementById('problem');
+            const feedbackEl = document.getElementById('feedback');
+            const optionsContainer = document.getElementById('options-container');
+            const nextBtn = document.getElementById('next-btn');
+            const scoreEl = document.getElementById('score');
+            const levelEl = document.getElementById('level');
+            const additionBtn = document.getElementById('addition-btn');
+            const subtractionBtn = document.getElementById('subtraction-btn');
+            const gameContainer = document.querySelector('.game-container');
+            
+            // حالة اللعبة
+            let score = 0;
+            let level = 1;
+            let currentAnswer = 0;
+            let isAddition = true;
+            let gameActive = true;
+            
+            // تهيئة اللعبة
+            function initGame() {
+                score = 0;
+                level = 1;
+                updateUI();
+                generateProblem();
+            }
+            
+            // توليد مسألة جديدة
+            function generateProblem() {
+                let num1, num2;
+                
+                if (level <= 3) {
+                    // المستويات 1-3: أرقام من 1 إلى 10
+                    num1 = Math.floor(Math.random() * 10) + 1;
+                    num2 = Math.floor(Math.random() * 10) + 1;
+                } else if (level <= 6) {
+                    // المستويات 4-6: أرقام من 5 إلى 15
+                    num1 = Math.floor(Math.random() * 11) + 5;
+                    num2 = Math.floor(Math.random() * 11) + 5;
+                } else {
+                    // المستويات 7+: أرقام من 10 إلى 20
+                    num1 = Math.floor(Math.random() * 11) + 10;
+                    num2 = Math.floor(Math.random() * 11) + 10;
+                }
+                
+                if (isAddition) {
+                    currentAnswer = num1 + num2;
+                    problemEl.textContent = `${num1} + ${num2} = ?`;
+                } else {
+                    // تأكد من أن num1 أكبر من num2 في حالة الطرح
+                    if (num1 < num2) [num1, num2] = [num2, num1];
+                    currentAnswer = num1 - num2;
+                    problemEl.textContent = `${num1} - ${num2} = ?`;
+                }
+                
+                generateOptions(currentAnswer);
+                
+                // إعادة تعيين الحالة
+                feedbackEl.textContent = '';
+                nextBtn.disabled = true;
+                gameActive = true;
+            }
+            
+            // توليد خيارات الإجابة
+            function generateOptions(correctAnswer) {
+                optionsContainer.innerHTML = '';
+                
+                // إنشاء قائمة بالخيارات (الإجابة الصحيحة + 3 خيارات عشوائية)
+                let options = [correctAnswer];
+                
+                while (options.length < 4) {
+                    let randomAnswer;
+                    if (level <= 3) {
+                        randomAnswer = correctAnswer + (Math.floor(Math.random() * 5) - 2);
+                    } else if (level <= 6) {
+                        randomAnswer = correctAnswer + (Math.floor(Math.random() * 7) - 3);
+                    } else {
+                        randomAnswer = correctAnswer + (Math.floor(Math.random() * 9) - 4);
+                    }
+                    
+                    // تأكد من أن الإجابة ليست سالبة في حالة الطرح
+                    if (randomAnswer > 0 && !options.includes(randomAnswer)) {
+                        options.push(randomAnswer);
+                    }
+                }
+                
+                // خلط الخيارات
+                shuffleArray(options);
+                
+                // إنشاء أزرار الخيارات
+                options.forEach(option => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.textContent = option;
+                    btn.addEventListener('click', () => checkAnswer(option, btn));
+                    optionsContainer.appendChild(btn);
+                });
+            }
+            
+            // التحقق من الإجابة
+            function checkAnswer(selectedOption, btn) {
+                if (!gameActive) return;
+                
+                gameActive = false;
+                
+                if (selectedOption == currentAnswer) {
+                    // إجابة صحيحة
+                    btn.classList.add('correct');
+                    feedbackEl.textContent = 'أحسنت! إجابة صحيحة 🎉';
+                    feedbackEl.style.color = '#2E7D32';
+                    score += level * 5; // نقاط أكثر للمستويات الأعلى
+                    createCelebration();
+                    
+                    // زيادة المستوى كل 3 إجابات صحيحة
+                    if (score >= level * 15) {
+                        level++;
+                    }
+                } else {
+                    // إجابة خاطئة
+                    btn.classList.add('incorrect');
+                    feedbackEl.textContent = `إجابة خاطئة! الإجابة الصحيحة: ${currentAnswer}`;
+                    feedbackEl.style.color = '#C62828';
+                    
+                    // إظهار الإجابة الصحيحة
+                    document.querySelectorAll('.option-btn').forEach(btn => {
+                        if (parseInt(btn.textContent) == currentAnswer) {
+                            btn.classList.add('correct');
+                        }
+                    });
+                }
+                
+                updateUI();
+                nextBtn.disabled = false;
+            }
+            
+            // إنشاء تأثيرات الاحتفال
+            function createCelebration() {
+                const emojis = ['🎉', '✨', '🌟', '🎈', '👍'];
+                
+                for (let i = 0; i < 5; i++) {
+                    const celeb = document.createElement('div');
+                    celeb.className = 'celebration';
+                    celeb.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    celeb.style.left = `${Math.random() * 80 + 10}%`;
+                    celeb.style.bottom = '20%';
+                    celeb.style.animationDelay = `${i * 0.2}s`;
+                    gameContainer.appendChild(celeb);
+                    
+                    setTimeout(() => {
+                        celeb.remove();
+                    }, 2000);
+                }
+            }
+            
+            // تبديل بين الجمع والطرح
+            additionBtn.addEventListener('click', () => {
+                isAddition = true;
+                additionBtn.classList.add('active');
+                subtractionBtn.classList.remove('active');
+                generateProblem();
+            });
+            
+            subtractionBtn.addEventListener('click', () => {
+                isAddition = false;
+                subtractionBtn.classList.add('active');
+                additionBtn.classList.remove('active');
+                generateProblem();
+            });
+            
+            // التالي
+            nextBtn.addEventListener('click', generateProblem);
+            
+            // تحديث واجهة المستخدم
+            function updateUI() {
+                scoreEl.textContent = score;
+                levelEl.textContent = level;
+            }
+            
+            // خلط المصفوفة
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+            
+            // بدء اللعبة
+            initGame();
+        });
+    </script>
+</body>
+</html>

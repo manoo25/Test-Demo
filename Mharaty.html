@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+
+
+    <title>مدينة الأطفال - مهاراتي</title>
+    <style>
+        *{
+            transition: all ease 0.5s;
+        }
+        :root {
+            --primary-color: #E91E63; /* وردي غامق */
+            --secondary-color: #F8BBD0; /* وردي فاتح */
+            --light-color: #FCE4EC; /* وردي فاتح جداً */
+            --dark-color: #C2185B; /* وردي داكن */
+            --accent-color: #FF80AB; /* وردي متوسط */
+            --text-color: #333;
+            --dark-text: #2b2828;
+            --head-text:18px;
+            --mainhead-text:22px;
+        }
+        
+        body {
+            font-family: 'Tajawal', 'Arial', sans-serif;
+            background-color: #FFF5F7; /* خلفية وردية فاتحة */
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::after {
+            content: "✿";
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.1;
+            right: -50px;
+            top: -50px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-top: 50px;
+            border-right: 5px solid var(--accent-color);
+            padding-right: 15px;
+        }
+        
+        h3 {
+            color: var(--dark-color);
+            font-size: 1.6rem;
+            margin-top: 30px;
+        }
+        h4 {
+            color: var(--dark-text);
+            font-size: 1.8rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        h4:hover {
+            color: var(--dark-color);
+        }
+        
+        .intro {
+            font-size: 1.2rem;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            border-right: 5px solid var(--secondary-color);
+            position: relative;
+        }
+        
+        .intro::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23E91E63" d="M50 0c27.6 0 50 22.4 50 50S77.6 100 50 100 0 77.6 0 50 22.4 0 50 0zm0 20c-16.6 0-30 13.4-30 30s13.4 30 30 30 30-13.4 30-30-13.4-30-30-30z"/></svg>');
+            background-repeat: no-repeat;
+            opacity: 0.1;
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+        
+        .pillars-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .pillar-card {
+            background-color: var(--light-color);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border-top: 5px solid var(--primary-color);
+        }
+        
+        .pillar-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .pillar-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .ethics-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .ethic-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-right: 3px solid var(--secondary-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .ethic-icon {
+            font-size: 1.8rem;
+            margin-left: 15px;
+            color: var(--dark-color);
+            flex-shrink: 0;
+        }
+        
+        .quran-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .quran-verse {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            line-height: 2;
+        }
+        
+        .quran-ref {
+            font-style: italic;
+        }
+        
+        .activity {
+            display: flex;
+            align-items: center;
+            background-color: var(--light-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .activity-icon {
+            font-size: 2rem;
+            margin-left: 20px;
+            color: var(--accent-color);
+            flex-shrink: 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: var(--dark-color);
+            color: white;
+            margin-top: 50px;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .hadith-box {
+            background-color: #FFF0F5;
+            border-right: 5px solid var(--accent-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        .contain-item {
+          
+            box-sizing: border-box;
+border: solid 1rem var(--secondary-color);
+        }
+        .contain-item img{
+          
+          height: 300px;
+        }
+        .contain-item .cover{
+position: absolute;
+top: 0;
+width: 100%;
+height: 100%;
+background-color: #122c498c;
+transform: translateY(100%);
+transition: all ease 0.5s;
+        }
+        .contain-item:hover .cover{
+            transform: translateY(0);
+        }
+        .contain-item:hover {
+            border: solid 1rem var(--primary-color);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            .pillars-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body >
+ 
+    <header>
+        <div class="container p-0">
+            <h1>مدينة الأطفال - مهاراتي</h1>
+            <p style="font-size: 18px">كل طفل لديه مهارات شخصية يجب تنميتها.</p>
+            <a class="btn-outline-warning btn px-5 py-2 rounded-5 " href="./index.html">الرئيسية</a>
+        </div>
+    </header>
+    
+    <div class="container">
+    
+        
+        <section class="section">
+      
+<div style="color:var(--primary-color);text-align: center;font-size: var( --head-text);" class="p">هيا نلعب ونتعلم</div>
+<h1 class="text-center">مهارات و انشطة مختلفة</h1>
+
+
+<section>
+   <div class="row ps-4 pe-4 gy-4 gx-4 pb-4 pt-5" >
+ 
+
+<div class="col-lg-4 col-md-6  ">
+      <div class="contain-item   rounded-circle overflow-hidden bg-danger p-0">
+    <div class="item position-relative ">
+      <img   class="w-100" src="imgs/maharaty/my-letters-500x500-1.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover  rounded-circle">
+         
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="content text-center pt-3">
+    <h4>حروفي الجميلة</h4>
+    <p>أبدائي فى تعليم أطفالك الحروف الهجائية فى سن ماقبل المدرسة لكى تسهلي عليهم وعلى المربين طريقة كتابتها ونطقها. مدينة الاطفال توفر لكى المئات من الحروف الهجائية الجاهزة للطباعة لكل حرف مع مثال .يدل عليه</p>
+  </div>
+</div>
+<div class="col-lg-4 col-md-6  ">
+      <div class="contain-item   rounded-circle overflow-hidden bg-danger p-0">
+    <div class="item position-relative ">
+      <img   class="w-100" src="imgs/maharaty/harasment_but-500x500-1.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover  rounded-circle">
+         
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="content text-center pt-3">
+    <h4>
+    أحب نفسي
+    </h4>
+    <p>
+        خلقنا الله بشراً غير معصومين منَّا الصَّالح ومنَّا الطَّالح لانشكَّك في نوايا أحد أو فئة معينة وكثيرًا ما يكون الضحية هو المعلم أو الشيخ أو الطبيب أو العكس لذلك نحن لا نخوّن أحدًا ولكن نريد المحافظة على أطفالنا لأنهم أمانة عندنا مسئولون عنها مع أحترامنا للجميع
+    </p>
+  </div>
+</div>
+<div class="col-lg-4 col-md-6  ">
+      <div class="contain-item   rounded-circle overflow-hidden bg-danger p-0">
+    <div class="item position-relative ">
+      <img   class="w-100" src="imgs/maharaty/opposites-500x500-1.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover  rounded-circle">
+         
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="content text-center pt-3">
+    <h4>
+        مفاهيم
+    </h4>
+    <p>
+        إن تعليم المتضادات من الأساليب العلمية لتعليم الأطفال مفردات اللغة العربية مما يسهّل عليهم حفظ وفهم معاني كلمات كثيرة في اللغة العربية لماذا المتضادات مهمة للطفل؟ هي مجموعة من الكلمات تصور المكان العدد الوقت والمشاعر لذلك هى مهمة للطفل ان يتعلمها في مرحلة مبكرة من عمرة ليستطيع التعبير عن نفسة وعن كل ماحولة
+    </p>
+  </div>
+</div>
+<div class="col-lg-4 col-md-6  ">
+      <div class="contain-item   rounded-circle overflow-hidden bg-danger p-0">
+    <div class="item position-relative ">
+      <img   class="w-100" src="imgs/maharaty/color-book-500x500-1.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover  rounded-circle">
+         
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="content text-center pt-3">
+    <h4>
+        كتاب الألوان
+    </h4>
+    <p>
+        عالم من غير الوان عالم بلا حياة تعليم الطفل اهمية الألوان في سن مبكرة تنميي تفكيره تستخرج مواهبه تعويده على التفكير تنمية سرعه البديهة لديه وتعويده على الإطلاع والتعلم
+    </p>
+  </div>
+</div>
+<div class="col-lg-4 col-md-6  ">
+      <div class="contain-item   rounded-circle overflow-hidden bg-danger p-0">
+    <div class="item position-relative ">
+      <img   class="w-100" src="imgs/maharaty/dot-to-dot-worksheets-500x500-1.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover  rounded-circle">
+         
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="content text-center pt-3">
+    <h4>
+        كلمات منقطة
+    </h4>
+    <p>
+        التوصيل بين النقاط هو نشاط كبير لتعليم أطفالك أو الطلاب الحروف الأبجدية وتكوين الكلمات وهو كطريقة ممتعة لتعزيز هذه المهارات. لأن التوصيل بين النقاط يعتبر لغز ومتعة واكتشاف، فإن الأطفال يحبون القيام بها
+    </p>
+  </div>
+</div>
+<div class="col-lg-4 col-md-6  ">
+      <div class="contain-item   rounded-circle overflow-hidden bg-danger p-0">
+    <div class="item position-relative ">
+      <img   class="w-100" src="imgs/maharaty/my-arabic-letters-500x500-1.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover  rounded-circle">
+         
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="content text-center pt-3">
+    <h4>
+        حروفي وكلماتي العربية
+    </h4>
+    <p>
+        حروفي وكلماتي العربية اوراق عمل تطبع وتجمع في كتاب يحملة الطفل معه لتعليم حروف اللغة العربية وذلك من خلال صور توضيحية مشوّقة تثبت المفاهيم في ذهن الطفل .
+    </p>
+  </div>
+</div>
+<div class="col-lg-4 col-md-6  ">
+      <div class="contain-item   rounded-circle overflow-hidden bg-danger p-0">
+    <div class="item position-relative ">
+      <img   class="w-100" src="imgs/maharaty/alphabet-kids-activity-500x500-1.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover  rounded-circle">
+         
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="content text-center pt-3">
+    <h4>
+        نشاطاتي
+    </h4>
+    <p>
+        متاهات الغاز توصيل نقاط الوان حروف وارقام اشكال واحجام واشياء كثيرة في نشاطاتي
+    </p>
+  </div>
+</div>
+<div class="col-lg-4 col-md-6  ">
+      <div class="contain-item   rounded-circle overflow-hidden bg-danger p-0">
+    <div class="item position-relative ">
+      <img   class="w-100" src="imgs/maharaty/count-numbers-and-color-500x500-1.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover  rounded-circle">
+         
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="content text-center pt-3">
+    <h4>
+        أرقامي
+    </h4>
+    <p>
+        من أهم أساسيات التعليم في المراحل الأولى للطفل هي مرحلة تعلم العد والأعداد وهو مهاره مهمه يجب ان يتقنها الطفل قبل مرحلة دخول المدرسة
+    </p>
+  </div>
+</div>
+<div class="col-lg-4 col-md-6  ">
+      <div class="contain-item   rounded-circle overflow-hidden bg-danger p-0">
+    <div class="item position-relative ">
+      <img   class="w-100" src="imgs/maharaty/count-and-adding-numbers-500x500-1.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover  rounded-circle">
+         
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="content text-center pt-3">
+    <h4>
+        أجمع
+    </h4>
+    <p>
+        يعتبر الجمع أساس العمليات الرياضية وأبسطها، ويرمز لهُ بالإشارة (+)، وبالرغم من سهولة عملية الجمع، إلا أنّ بعض الأطفال قد يواجهون بعض الصعوبة من فهمه، وذلك يعتمد على طريقة شرحه مدينة الاطفال تقدم مجموعة من اوراق العمل تبسط هذه العمليات
+    </p>
+  </div>
+</div>
+<div class="col-lg-4 col-md-6  ">
+      <div class="contain-item   rounded-circle overflow-hidden bg-danger p-0">
+    <div class="item position-relative ">
+      <img   class="w-100" src="imgs/maharaty/creat-arabic-words-500x500-1.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover  rounded-circle">
+         
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="content text-center pt-3">
+    <h4>
+        كتاب لغتي
+    </h4>
+    <p>
+        كتاب لغتي يضم الحروفالابجدية كلها يعلم الطفل كتابة الحرف بالصوت القصير والصوت الطويل وهو للسنة الأولى
+    </p>
+  </div>
+</div>
+<div class="col-lg-4 col-md-6  ">
+      <div class="contain-item   rounded-circle overflow-hidden bg-danger p-0">
+    <div class="item position-relative ">
+      <img   class="w-100" src="imgs/maharaty/bully-500x500-1.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover  rounded-circle">
+         
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="content text-center pt-3">
+    <h4>
+        لا للتنمر
+    </h4>
+    <p>
+        يُعرَّف التنمُّر بأنّه: شكل من أشكال العنف، والإساءة، والإيذاء، الذي يكون مُوجَّهاً من شخص، أو مجموعة من الأشخاص، إلى شخص آخر، أو مجموعة من الأشخاص الأقلّ قوّة، سواء بدنيّاً، أو نفسيّاً
+    </p>
+  </div>
+</div>
+<div class="col-lg-4 col-md-6  ">
+      <div class="contain-item   rounded-circle overflow-hidden bg-danger p-0">
+    <div class="item position-relative ">
+      <img   class="w-100" src="imgs/maharaty/Occupations-500x500-1.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover  rounded-circle">
+         
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="content text-center pt-3">
+    <h4>
+        مهن وأدوات
+    </h4>
+    <p>
+        تعليم الأطفال المهن وا الحرف وادواتها منذ الصغر مفيذ لهم بحيث يجعلهم يحترمون اصحابها وايضا يتعرفون على ميولهم والاشياء التي يحبونها
+    </p>
+  </div>
+</div>
+<div class="col-lg-4 col-md-6  ">
+      <div class="contain-item   rounded-circle overflow-hidden bg-danger p-0">
+    <div class="item position-relative ">
+      <img   class="w-100" src="imgs/maharaty/words-latters-cards-500x500-1.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover  rounded-circle">
+         
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="content text-center pt-3">
+    <h4>
+      كروت حروف وكلمات
+    </h4>
+    <p>
+      أبدائي فى تعليم أطفالك الحروف الهجائية فى سن ماقبل المدرسة لكى تسهلي عليهم حفظ وفهم معاني كلمات اللغة العربية
+    </p>
+  </div>
+</div>
+<div class="col-lg-4 col-md-6  ">
+      <div class="contain-item   rounded-circle overflow-hidden bg-danger p-0">
+    <div class="item position-relative ">
+      <img   class="w-100" src="imgs/maharaty/letters-stories-worksheets-500x500-1.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover  rounded-circle">
+         
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="content text-center pt-3">
+    <h4>
+      قصه حرف
+    </h4>
+    <p>
+      أكتب قصة عن كل حرف واطبعها واجمعها في كتاب ولتكن قصتك الاولى وشاركها مع الجميع
+    </p>
+  </div>
+</div>
+<div class="col-lg-4 col-md-6  ">
+      <div class="contain-item   rounded-circle overflow-hidden bg-danger p-0">
+    <div class="item position-relative ">
+      <img   class="w-100" src="imgs/maharaty/Examples-of-the-door-of-sukoon-500x500-1.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover  rounded-circle">
+         
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="content text-center pt-3">
+    <h4>
+      أمثلة وتدريبات علي باب السكون
+    </h4>
+    <p>
+      السكون عبارة عن دائرة فوق الحرف والحرف الساكن يقرأ مع الحرفالذي قبله
+    </p>
+  </div>
+</div>
+
+
+</div>
+</section>
+        </section>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+             <!-- Start Footer -->
+  <footer style="background-color: #001328;">
+    <div  class="container-fluid">
+      <div class="logo-content">
+        <img class="logoo" src="imgs/new/logo2.png" alt="Logo" />
+        <p>
+          انضم إلينا في تشكيل مستقبل مشرق! شاهد لماذا تختارنا العائلات في جميع أنحاء البلاد لتكون المدرسة التمهيدية الخاصة بهم.
+
+          العنوان: شارع عبدالله جاسر 93 الزهراء
+          
+          البريد الإلكتروني: info@medinakids.com
+          
+          الهاتف: 00966551105115
+        </p>
+      </div>
+      <div class="links">
+        <div class="link">
+          <h3>روابط هامة</h3>
+          <ul >
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="#"> بيت جدتي</a></li>
+            <li><a href="#"> مهاراتي</a></li>
+            <li><a href="artcleIslam.html"> فرائض وأخلاق</a></li>
+
+
+          </ul>
+        </div>
+        <div class="link">
+          <h3>هيا نلعب</h3>
+          <ul>
+            <li><a href="learnAr.html"> لعبة تعلم العربية</a></li>
+            <li><a href="learnDigits.html">لعبة تعلم الأرقام</a></li>
+            <li><a href="eatingPlay.html">لعبة آداب الطعام </a></li>
+
+          </ul>
+        </div>
+
+        <div class="link">
+          <h3>اللغة</h3>
+          <ul>
+            <li><a >العربية</a></li>
+          </ul>
+        </div>
+
+
+
+      </div>
+      <div class="subscribe-us ">
+        <h3>مفالات مهمة</h3>
+       <div class="article d-flex flex-column gap-4">
+        <div class="item">
+         <div class="pic">
+          <img src="./imgs/new/Ar.jpg" alt="">
+          <div class="Fcover">
+<a href="./articleAr.html" class="fa-solid fa-link"></a>
+          </div>
+         </div>
+        
+          <p class="ptitle">
+            طرق فعّالة لتعليم الأطفال الحروف
+          </p>
+        </div>
+        <div class="item">
+         <div class="pic">
+          <img src="./imgs/new/dig.png" alt="">
+          <div class="Fcover">
+<a href="#" class="fa-solid fa-link"></a>
+          </div>
+         </div>
+        
+          <p class="ptitle">
+            طرق فعّالة لتعليم الأطفال الأرقام
+          </p>
+        </div>
+       </div>
+       
+      </div>
+    </div>
+
+    
+    <div class="copyright text-white">
+      حقوق النشر &copy; 2025 .Madina كل الحقوق محفوظة.
+    </div>
+  </footer>
+  <!-- End Footer --> 
+   
+</body>
+</html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة الحيوانات للأطفال</title>
+    <style>
+        body {
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+            background-color: #ffebf3;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            color: #d23369;
+        }
+        
+        .game-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(210, 51, 105, 0.2);
+            border: 4px solid #ff9ec6;
+        }
+        
+        h1 {
+            color: #ff4d94;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255, 182, 193, 0.8);
+        }
+        
+        .question {
+            font-size: 22px;
+            margin-bottom: 25px;
+            background-color: #ffd6e7;
+            padding: 15px;
+            border-radius: 15px;
+            border: 3px dashed #ff85b8;
+        }
+        
+        .animals-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .animal {
+            width: 100px;
+            height: 120px;
+            background-color: #fff;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid #ffb6c1;
+            box-shadow: 0 5px 10px rgba(255, 77, 148, 0.1);
+        }
+        
+        .animal:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 15px rgba(255, 77, 148, 0.3);
+        }
+        
+        .animal img {
+            width: 60px;
+            height: 60px;
+        }
+        
+        .animal span {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #d23369;
+        }
+        
+        .score {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #ff4d94;
+        }
+        
+        .feedback {
+            font-size: 24px;
+            font-weight: bold;
+            height: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .correct {
+            color: #4CAF50;
+        }
+        
+        .wrong {
+            color: #F44336;
+        }
+        
+        .next-btn {
+            background-color: #ff4d94;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            box-shadow: 0 5px 10px rgba(255, 77, 148, 0.3);
+        }
+        
+        .next-btn:hover {
+            background-color: #d23369;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(255, 77, 148, 0.4);
+        }
+        
+        .next-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            display: none;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            border-radius: 50%;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 20px;
+            background-color: #ffd6e7;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: #ff4d94;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+   
+    </style>
+</head>
+<body>
+
+    
+    <div class="game-container">
+        <h1>🐾 لعبة الحيوانات الممتعة 🐾</h1>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        
+        <div class="score">النقاط: <span id="score-value">0</span></div>
+        
+        <div class="question" id="question">اختر الحيوان الصحيح!</div>
+        
+        <div class="feedback" id="feedback"></div>
+        
+        <div class="animals-container" id="animals-container">
+            <!-- الحيوانات ستضاف هنا بالجافاسكريبت -->
+        </div>
+        
+        <button class="next-btn" id="next-btn" disabled>السؤال التالي</button>
+    </div>
+    
+    <div class="celebration" id="celebration"></div>
+    
+    <script>
+        // بيانات الأسئلة والحيوانات
+        const questions = [
+            {
+                question: "أي حيوان يقول 'مواء'؟",
+                correctAnimal: "قطة",
+                options: ["كلب", "قطة", "أسد", "بقرة"],
+              
+            },
+            {
+                question: "أي حيوان يعيش في الماء؟",
+                correctAnimal: "سمكة",
+                options: ["فيل", "سمكة", "زرافة", "دجاجة"],
+              
+            },
+            {
+                question: "أي حيوان يطير؟",
+                correctAnimal: "عصفور",
+                options: ["حصان", "تمساح", "عصفور", "سلحفاة"],
+               
+            },
+            {
+                question: "أي حيوان له رقبة طويلة؟",
+                correctAnimal: "زرافة",
+                options: ["فأر", "زرافة", "قرد", "بطريق"],
+                
+            },
+            {
+                question: "أي حيوان يعرف بملك الغابة؟",
+                correctAnimal: "أسد",
+                options: ["أسد", "نمر", "ذئب", "دب"],
+               
+            },
+            {
+                question: "أي حيوان يبيض؟",
+                correctAnimal: "دجاجة",
+                options: ["بقرة", "دجاجة", "كلب", "قطة"],
+                
+            },
+            {
+                question: "أي حيوان بطيء الحركة؟",
+                correctAnimal: "سلحفاة",
+                options: ["أرنب", "سلحفاة", "نمر", "غزال"],
+              
+            }
+        ];
+        
+        // رموز الحيوانات (إيموجي)
+        const animalEmojis = {
+            "قطة": "🐱",
+            "كلب": "🐶",
+            "أسد": "🦁",
+            "بقرة": "🐮",
+            "سمكة": "🐠",
+            "فيل": "🐘",
+            "زرافة": "🦒",
+            "دجاجة": "🐔",
+            "عصفور": "🐦",
+            "حصان": "🐴",
+            "تمساح": "🐊",
+            "سلحفاة": "🐢",
+            "نمر": "🐯",
+            "ذئب": "🐺",
+            "دب": "🐻",
+            "فأر": "🐭",
+            "قرد": "🐵",
+            "بطريق": "🐧",
+            "أرنب": "🐰",
+            "غزال": "🦌"
+        };
+        
+        // متغيرات اللعبة
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnimal = null;
+        let soundEnabled = true;
+        
+        // عناصر DOM
+        const questionElement = document.getElementById('question');
+        const animalsContainer = document.getElementById('animals-container');
+        const feedbackElement = document.getElementById('feedback');
+        const scoreValueElement = document.getElementById('score-value');
+        const nextButton = document.getElementById('next-btn');
+        const celebrationElement = document.getElementById('celebration');
+        const progressBar = document.getElementById('progress-bar');
+
+      
+        
+        // تهيئة اللعبة
+        function initGame() {
+            currentQuestionIndex = 0;
+            score = 0;
+            updateScore();
+            updateProgress();
+            loadQuestion(currentQuestionIndex);
+        }
+        
+        // تحميل السؤال
+        function loadQuestion(index) {
+            if (index >= questions.length) {
+                // انتهت الأسئلة
+                questionElement.textContent = "🎉 أحسنت! لقد أكملت جميع الأسئلة! 🎉";
+                animalsContainer.innerHTML = "";
+                feedbackElement.textContent = `درجتك النهائية: ${score} من ${questions.length}`;
+                nextButton.disabled = true;
+           
+                return;
+            }
+            
+            const question = questions[index];
+            questionElement.textContent = question.question;
+            feedbackElement.textContent = "";
+            feedbackElement.className = "feedback";
+            selectedAnimal = null;
+            nextButton.disabled = true;
+            
+            // عرض خيارات الحيوانات
+            animalsContainer.innerHTML = "";
+            question.options.forEach(animal => {
+                const animalElement = document.createElement('div');
+                animalElement.className = 'animal';
+                animalElement.innerHTML = `
+                    <div style="font-size: 40px;">${animalEmojis[animal]}</div>
+                    <span>${animal}</span>
+                `;
+                
+                animalElement.addEventListener('click', () => selectAnimal(animal, animalElement));
+                animalsContainer.appendChild(animalElement);
+            });
+        }
+        
+        // اختيار حيوان
+        function selectAnimal(animal, animalElement) {
+            if (selectedAnimal !== null) return;
+            
+            selectedAnimal = animal;
+            const question = questions[currentQuestionIndex];
+            
+            // إزالة التحديد من جميع الحيوانات
+            document.querySelectorAll('.animal').forEach(el => {
+                el.style.border = '3px solid #ffb6c1';
+                el.style.transform = 'scale(1)';
+            });
+            
+            // تحديد الحيوان المختار
+            animalElement.style.border = '3px solid #ff4d94';
+            animalElement.style.transform = 'scale(1.05)';
+            
+            // التحقق من الإجابة
+            if (animal === question.correctAnimal) {
+                feedbackElement.textContent = "أحسنت! إجابة صحيحة 🎉";
+                feedbackElement.className = "feedback correct";
+                score++;
+                updateScore();
+                createConfetti();
+              
+            } else {
+                feedbackElement.textContent = `ليس صحيح! الجواب الصحيح هو ${question.correctAnimal}`;
+                feedbackElement.className = "feedback wrong";
+             
+            }
+            
+            nextButton.disabled = false;
+        }
+        
+        // تحديث النقاط
+        function updateScore() {
+            scoreValueElement.textContent = score;
+        }
+        
+        // تحديث شريط التقدم
+        function updateProgress() {
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+        
+        // الانتقال للسؤال التالي
+        function nextQuestion() {
+            currentQuestionIndex++;
+            updateProgress();
+            loadQuestion(currentQuestionIndex);
+        }
+        
+    
+        
+        // تأثير الاحتفال (كونفيتي)
+        function createConfetti() {
+            celebrationElement.style.display = 'block';
+            celebrationElement.innerHTML = '';
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                
+                // ألوان عشوائية
+                const colors = ['#ff4d94', '#ff85b8', '#ffb6c1', '#ffd6e7', '#ffebf3', '#ffffff'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.backgroundColor = randomColor;
+                
+                // أحجام عشوائية
+                const size = Math.random() * 10 + 5;
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                
+                // مواقع عشوائية
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.top = `${Math.random() * 100}%`;
+                
+                // حركة عشوائية
+                const animationDuration = Math.random() * 3 + 2;
+                confetti.style.animation = `fall ${animationDuration}s linear forwards`;
+                
+                celebrationElement.appendChild(confetti);
+            }
+            
+            setTimeout(() => {
+                celebrationElement.style.display = 'none';
+            }, 3000);
+        }
+        
+        // إضافة أنيميشن للكونفيتي
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fall {
+                to {
+                    transform: translateY(100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // أحداث الأزرار
+        nextButton.addEventListener('click', nextQuestion);
+     
+        
+        // بدء اللعبة
+        initGame();
+    </script>
+</body>
+</html>

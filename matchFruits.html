@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة الفواكه للأطفال</title>
+    <style>
+        body {
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+            background-color: #ffebf3;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            color: #d23369;
+        }
+        
+        .game-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(210, 51, 105, 0.2);
+            border: 4px solid #ff9ec6;
+        }
+        
+        h1 {
+            color: #ff4d94;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255, 182, 193, 0.8);
+        }
+        
+        .question {
+            font-size: 22px;
+            margin-bottom: 25px;
+            background-color: #ffd6e7;
+            padding: 15px;
+            border-radius: 15px;
+            border: 3px dashed #ff85b8;
+        }
+        
+        .fruits-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .fruit {
+            width: 100px;
+            height: 100px;
+            background-color: #fff;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid #ffb6c1;
+            box-shadow: 0 5px 10px rgba(255, 77, 148, 0.1);
+        }
+        
+        .fruit:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 15px rgba(255, 77, 148, 0.3);
+        }
+        
+        .fruit img {
+            width: 60px;
+            height: 60px;
+        }
+        
+        .fruit span {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #d23369;
+        }
+        
+        .score {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #ff4d94;
+        }
+        
+        .feedback {
+            font-size: 24px;
+            font-weight: bold;
+            height: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .correct {
+            color: #4CAF50;
+        }
+        
+        .wrong {
+            color: #F44336;
+        }
+        
+        .next-btn {
+            background-color: #ff4d94;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            box-shadow: 0 5px 10px rgba(255, 77, 148, 0.3);
+        }
+        
+        .next-btn:hover {
+            background-color: #d23369;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(255, 77, 148, 0.4);
+        }
+        
+        .next-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            display: none;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>🎀 لعبة الفواكه الممتعة 🎀</h1>
+        
+        <div class="score">النقاط: <span id="score-value">0</span></div>
+        
+        <div class="question" id="question">اختر الفاكهة الصحيحة!</div>
+        
+        <div class="feedback" id="feedback"></div>
+        
+        <div class="fruits-container" id="fruits-container">
+            <!-- الفواكه ستضاف هنا بالجافاسكريبت -->
+        </div>
+        
+        <button class="next-btn" id="next-btn" disabled>السؤال التالي</button>
+    </div>
+    
+    <div class="celebration" id="celebration"></div>
+    
+    <script>
+        // بيانات الأسئلة والفواكه
+        const questions = [
+            {
+                question: "أي فاكهة لونها أحمر؟",
+                correctFruit: "تفاح",
+                options: ["تفاح", "موز", "عنب", "ليمون"]
+            },
+            {
+                question: "أي فاكهة تشبه النجوم عند تقطيعها؟",
+                correctFruit: "كيوي",
+                options: ["برتقال", "كيوي", "فراولة", "مانجو"]
+            },
+            {
+                question: "أي فاكهة صفراء وطولية؟",
+                correctFruit: "موز",
+                options: ["تفاح", "عنب", "موز", "فراولة"]
+            },
+            {
+                question: "أي فاكهة خضراء من الخارج وحمراء من الداخل؟",
+                correctFruit: "بطيخ",
+                options: ["بطيخ", "برتقال", "موز", "عنب"]
+            },
+            {
+                question: "أي فاكهة صغيرة وحمراء ولها بذور خارجية؟",
+                correctFruit: "فراولة",
+                options: ["تفاح", "فراولة", "عنب", "أناناس"]
+            }
+        ];
+        
+        const fruitEmojis = {
+            "تفاح": "🍎",
+            "موز": "🍌",
+            "عنب": "🍇",
+            "ليمون": "🍋",
+            "كيوي": "🥝",
+            "برتقال": "🍊",
+            "فراولة": "🍓",
+            "مانجو": "🥭",
+            "بطيخ": "🍉",
+            "أناناس": "🍍"
+        };
+        
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedFruit = null;
+        const questionElement = document.getElementById('question');
+        const fruitsContainer = document.getElementById('fruits-container');
+        const feedbackElement = document.getElementById('feedback');
+        const scoreValueElement = document.getElementById('score-value');
+        const nextButton = document.getElementById('next-btn');
+        const celebrationElement = document.getElementById('celebration');
+        function initGame() {
+            currentQuestionIndex = 0;
+            score = 0;
+            updateScore();
+            loadQuestion(currentQuestionIndex);
+        }
+        
+        function loadQuestion(index) {
+            if (index >= questions.length) {
+               
+                questionElement.textContent = "🎉 أحسنت! لقد أكملت جميع الأسئلة! 🎉";
+                fruitsContainer.innerHTML = "";
+                feedbackElement.textContent = `درجتك النهائية: ${score} من ${questions.length}`;
+                nextButton.disabled = true;
+                return;
+            }
+            
+            const question = questions[index];
+            questionElement.textContent = question.question;
+            feedbackElement.textContent = "";
+            feedbackElement.className = "feedback";
+            selectedFruit = null;
+            nextButton.disabled = true;
+            
+            
+            fruitsContainer.innerHTML = "";
+            question.options.forEach(fruit => {
+                const fruitElement = document.createElement('div');
+                fruitElement.className = 'fruit';
+                fruitElement.innerHTML = `
+                    <span>${fruit}</span>
+                    <div style="font-size: 40px;">${fruitEmojis[fruit]}</div>
+                `;
+                
+                fruitElement.addEventListener('click', () => selectFruit(fruit, fruitElement));
+                fruitsContainer.appendChild(fruitElement);
+            });
+        }
+        
+      
+        function selectFruit(fruit, fruitElement) {
+            if (selectedFruit !== null) return;
+            
+            selectedFruit = fruit;
+            const question = questions[currentQuestionIndex];
+            
+           
+            document.querySelectorAll('.fruit').forEach(el => {
+                el.style.border = '3px solid #ffb6c1';
+                el.style.transform = 'scale(1)';
+            });
+            
+           
+            fruitElement.style.border = '3px solid #ff4d94';
+            fruitElement.style.transform = 'scale(1.05)';
+            
+           
+            if (fruit === question.correctFruit) {
+                feedbackElement.textContent = "أحسنت! إجابة صحيحة 🎉";
+                feedbackElement.className = "feedback correct";
+                score++;
+                updateScore();
+                createConfetti();
+            } else {
+                feedbackElement.textContent = `ليس صحيح! الجواب الصحيح هو ${question.correctFruit}`;
+                feedbackElement.className = "feedback wrong";
+            }
+            
+            nextButton.disabled = false;
+        }
+        
+       
+        function updateScore() {
+            scoreValueElement.textContent = score;
+        }
+        
+       
+        function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion(currentQuestionIndex);
+        }
+        
+       
+        function createConfetti() {
+            celebrationElement.style.display = 'block';
+            celebrationElement.innerHTML = '';
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+              
+                const colors = ['#ff4d94', '#ff85b8', '#ffb6c1', '#ffd6e7', '#ffebf3', '#ffffff'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.backgroundColor = randomColor;
+                
+                
+                const size = Math.random() * 10 + 5;
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                
+               
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.top = `${Math.random() * 100}%`;
+                
+               
+                const animationDuration = Math.random() * 3 + 2;
+                confetti.style.animation = `fall ${animationDuration}s linear forwards`;
+                
+                celebrationElement.appendChild(confetti);
+            }
+            
+            setTimeout(() => {
+                celebrationElement.style.display = 'none';
+            }, 3000);
+        }
+        
+       
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fall {
+                to {
+                    transform: translateY(100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+       
+        nextButton.addEventListener('click', nextQuestion);
+        
+      
+        initGame();
+    </script>
+</body>
+</html>

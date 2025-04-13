@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>تعليم العربية للأطفال - جميع الحروف</title>
+    <style>
+        :root {
+            --primary-color: #E91E63;
+            --secondary-color: #F8BBD0;
+            --light-color: #FCE4EC;
+            --dark-color: #C2185B;
+            --text-color: #333;
+            --background-color: #FFF9FB;
+        }
+        
+        body {
+            font-family: 'Tajawal', 'Arial', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-top: 40px;
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        
+        .intro {
+            font-size: 1.2rem;
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-right: 5px solid var(--secondary-color);
+        }
+        
+        .lesson-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+        
+        .lesson-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .lesson-img {
+            width: 100%;
+            height: 300px;
+            object-fit: fill;
+            border-bottom: 5px solid var(--secondary-color);
+        }
+        
+        .lesson-content {
+            padding: 20px;
+        }
+        
+        .lesson-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-top: 0;
+        }
+        
+        .lesson-desc {
+            margin-bottom: 15px;
+        }
+        
+        .tips-section {
+            background-color: var(--light-color);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 40px 0;
+            border-right: 5px solid var(--primary-color);
+        }
+        
+        .tips-title {
+            color: var(--dark-color);
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .tip-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .tip-icon {
+            font-size: 2rem;
+            margin-left: 15px;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            margin-top: 50px;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .letter-box {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            font-size: 2rem;
+            text-align: center;
+            line-height: 60px;
+            border-radius: 10px;
+            margin: 5px;
+            font-weight: bold;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        
+        .word-example {
+            background-color: var(--light-color);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .word-emoji {
+            font-size: 2rem;
+            margin-left: 15px;
+        }
+        
+        .letter-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .letter-card {
+          
+            height: 140px;
+            background-color: white;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .letter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .letter-display {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .letter-sound {
+            font-size: 0.9rem;
+            color: var(--dark-color);
+            text-align: center;
+        }
+        
+        .sound-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .lesson-img {
+                height: 200px;
+            }
+            
+       
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container p-0">
+            <h1>مرحباً بكم في رحلة تعلم العربية للأطفال</h1>
+            <p class="text-white pt-3">تعلم جميع حروف العربية مع أصواتها وأمثلة ممتعة</p>
+            <a class="btn-outline-warning btn px-5 py-2 rounded-5 " href="./index.html">الرئيسية</a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="intro">
+            <h2>الحروف العربية كاملة مع أصواتها</h2>
+            <p>اللغة العربية تحتوي على 28 حرفاً أساسياً، كل حرف له شكل وصوت مميز. في هذه الصفحة سنتعرف على جميع الحروف مع طريقة نطقها الصحيحة وأمثلة عليها.</p>
+        </section>
+        
+        <section>
+            <h2>الحروف الهجائية العربية</h2>
+            
+            <div >
+
+
+                <div class="row ps-3 pe-3  gx-2 gy-3 pb-3  pt-2 ">
+ <!-- حرف الألف -->
+              <div class="col-6 col-md-3 col-lg-2">
+                <div onclick="playSound('alif')" class="letter-card   ">
+                    <div class="letter-display">أ</div>
+                    <div class="letter-sound">(ألف)</div>
+                    <button class="sound-btn" onclick="playSound('alif')"><i class="fas fa-volume-up"></i></button>
+                </div>
+              </div>
+
+<!-- حرف الباء -->
+<div class="col-6 col-md-3 col-lg-2">
+                <div class="letter-card  ">
+                    <div class="letter-display">ب</div>
+                    <div class="letter-sound">(باء)</div>
+                    <button class="sound-btn" onclick="playSound('baa')"><i class="fas fa-volume-up"></i></button>
+                </div>
+</div>
+        
+               
+                
+                
+                
+                <!-- حرف التاء -->
+                <div class="col-6 col-md-3 col-lg-2">
+                <div class="letter-card ">
+                    <div class="letter-display">ت</div>
+                    <div class="letter-sound">(تاء)</div>
+                    <button class="sound-btn" onclick="playSound('taa')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف الثاء -->
+                <div class="letter-card ">
+                    <div class="letter-display">ث</div>
+                    <div class="letter-sound">(ثاء)</div>
+                    <button class="sound-btn" onclick="playSound('thaa')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف الجيم -->
+                <div class="letter-card ">
+                    <div class="letter-display">ج</div>
+                    <div class="letter-sound">(جيم)</div>
+                    <button class="sound-btn" onclick="playSound('jeem')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف الحاء -->
+                <div class="letter-card ">
+                    <div class="letter-display">ح</div>
+                    <div class="letter-sound">(حاء)</div>
+                    <button class="sound-btn" onclick="playSound('haa')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف الخاء -->
+                <div class="letter-card ">
+                    <div class="letter-display">خ</div>
+                    <div class="letter-sound">(خاء)</div>
+                    <button class="sound-btn" onclick="playSound('khaa')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف الدال -->
+                <div class="letter-card ">
+                    <div class="letter-display">د</div>
+                    <div class="letter-sound">(دال)</div>
+                    <button class="sound-btn" onclick="playSound('daal')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف الذال -->
+                <div class="letter-card ">
+                    <div class="letter-display">ذ</div>
+                    <div class="letter-sound">(ذال)</div>
+                    <button class="sound-btn" onclick="playSound('dhaal')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف الراء -->
+                <div class="letter-card ">
+                    <div class="letter-display">ر</div>
+                    <div class="letter-sound">(راء)</div>
+                    <button class="sound-btn" onclick="playSound('raa')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف الزاي -->
+                <div class="letter-card ">
+                    <div class="letter-display">ز</div>
+                    <div class="letter-sound">(زاي)</div>
+                    <button class="sound-btn" onclick="playSound('zaay')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف السين -->
+                <div class="letter-card ">
+                    <div class="letter-display">س</div>
+                    <div class="letter-sound">(سين)</div>
+                    <button class="sound-btn" onclick="playSound('seen')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف الشين -->
+                <div class="letter-card ">
+                    <div class="letter-display">ش</div>
+                    <div class="letter-sound">(شين)</div>
+                    <button class="sound-btn" onclick="playSound('sheen')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف الصاد -->
+                <div class="letter-card ">
+                    <div class="letter-display">ص</div>
+                    <div class="letter-sound">(صاد)</div>
+                    <button class="sound-btn" onclick="playSound('saad')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف الضاد -->
+                <div class="letter-card ">
+                    <div class="letter-display">ض</div>
+                    <div class="letter-sound">(ضاد)</div>
+                    <button class="sound-btn" onclick="playSound('daad')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف الطاء -->
+                <div class="letter-card ">
+                    <div class="letter-display">ط</div>
+                    <div class="letter-sound">(طاء)</div>
+                    <button class="sound-btn" onclick="playSound('taa2')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف الظاء -->
+                <div class="letter-card ">
+                    <div class="letter-display">ظ</div>
+                    <div class="letter-sound">(ظاء)</div>
+                    <button class="sound-btn" onclick="playSound('thaa2')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف العين -->
+                <div class="letter-card ">
+                    <div class="letter-display">ع</div>
+                    <div class="letter-sound">(عين)</div>
+                    <button class="sound-btn" onclick="playSound('ayn')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف الغين -->
+                <div class="letter-card ">
+                    <div class="letter-display">غ</div>
+                    <div class="letter-sound">(غين)</div>
+                    <button class="sound-btn" onclick="playSound('ghayn')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف الفاء -->
+                <div class="letter-card ">
+                    <div class="letter-display">ف</div>
+                    <div class="letter-sound">(فاء)</div>
+                    <button class="sound-btn" onclick="playSound('faa')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف القاف -->
+                <div class="letter-card ">
+                    <div class="letter-display">ق</div>
+                    <div class="letter-sound">(قاف)</div>
+                    <button class="sound-btn" onclick="playSound('qaaf')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف الكاف -->
+                <div class="letter-card ">
+                    <div class="letter-display">ك</div>
+                    <div class="letter-sound">(كاف)</div>
+                    <button class="sound-btn" onclick="playSound('kaaf')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف اللام -->
+                <div class="letter-card ">
+                    <div class="letter-display">ل</div>
+                    <div class="letter-sound">(لام)</div>
+                    <button class="sound-btn" onclick="playSound('laam')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف الميم -->
+                <div class="letter-card ">
+                    <div class="letter-display">م</div>
+                    <div class="letter-sound">(ميم)</div>
+                    <button class="sound-btn" onclick="playSound('meem')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف النون -->
+                <div class="letter-card ">
+                    <div class="letter-display">ن</div>
+                    <div class="letter-sound">(نون)</div>
+                    <button class="sound-btn" onclick="playSound('noon')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف الهاء -->
+                <div class="letter-card ">
+                    <div class="letter-display">ه</div>
+                    <div class="letter-sound">(هاء)</div>
+                    <button class="sound-btn" onclick="playSound('haa2')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف الواو -->
+                <div class="letter-card ">
+                    <div class="letter-display">و</div>
+                    <div class="letter-sound">(واو)</div>
+                    <button class="sound-btn" onclick="playSound('waaw')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                <!-- حرف الياء -->
+                <div class="letter-card ">
+                    <div class="letter-display">ي</div>
+                    <div class="letter-sound">(ياء)</div>
+                    <button class="sound-btn" onclick="playSound('yaa')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                </div>
+            </div>
+            </div>
+        </section>
+        
+        <section class="tips-section">
+            <h3 class="tips-title">كيف تتعلم الحروف العربية بسهولة؟</h3>
+            
+            <div class="tip-item">
+                <span class="tip-icon">🔊</span>
+                <div>
+                    <strong>استمع جيداً للأصوات:</strong>
+                    <p>اضغط على زر الصوت بجانب كل حرف لسماع نطقه الصحيح عدة مرات حتى تتقنه.</p>
+                </div>
+            </div>
+            
+            <div class="tip-item">
+                <span class="tip-icon">✍️</span>
+                <div>
+                    <strong>كرر كتابة الحروف:</strong>
+                    <p>اكتب كل حرف عدة مرات في دفترك مع نطقه بصوت عالٍ أثناء الكتابة.</p>
+                </div>
+            </div>
+            
+            <div class="tip-item">
+                <span class="tip-icon">📖</span>
+                <div>
+                    <strong>ابحث عن الحرف في الكلمات:</strong>
+                    <p>حاول أن تجد الحرف في الكلمات التي تقرأها أو تسمعها يومياً.</p>
+                </div>
+            </div>
+            
+            <div class="tip-item">
+                <span class="tip-icon">🎮</span>
+                <div>
+                    <strong>العب بألعاب الحروف:</strong>
+                    <p>استخدم الألعاب التعليمية التي تساعدك على تذكر الحروف وأصواتها.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2>أمثلة على كلمات من الحروف العربية</h2>
+            
+            <div class="lesson-card">
+                <img src="./imgs/new/Ar.jpg" alt="أمثلة على الحروف العربية" class="lesson-img">
+                <div class="lesson-content">
+                    <h3 class="lesson-title">كلمات تبدأ بكل حرف</h3>
+                    
+                    <div class="word-example">
+                        <div>
+                            <strong>أ:</strong> أرنب، أسد، إبرة<br>
+                            <strong>ب:</strong> بيت، بطة، برتقال<br>
+                            <strong>ت:</strong> تفاحة، تاج، تمساح<br>
+                            <strong>ث:</strong> ثعلب، ثوب، ثمرة
+                        </div>
+                        <span class="word-emoji">📝</span>
+                    </div>
+                    
+                    <div class="word-example">
+                        <div>
+                            <strong>ج:</strong> جمل، جبل، جزرة<br>
+                            <strong>ح:</strong> حصان، حليب، حذاء<br>
+                            <strong>خ:</strong> خروف، خاتم، خيار<br>
+                            <strong>د:</strong> دمية، دب، دجاجة
+                        </div>
+                        <span class="word-emoji">📚</span>
+                    </div>
+                    
+                    <div class="word-example">
+                        <div>
+                            <strong>ذ:</strong> ذرة، ذيل، ذهب<br>
+                            <strong>ر:</strong> رمان، ريشة، رجل<br>
+                            <strong>ز:</strong> زرافة، زهرة، زجاجة<br>
+                            <strong>س:</strong> ساعة، سمكة، سحابة
+                        </div>
+                        <span class="word-emoji">✏️</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="lesson-card">
+                <img src="https://images.unsplash.com/photo-1561037404-61cd46aa615b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="المزيد من الأمثلة" class="lesson-img">
+                <div class="lesson-content">
+                    <h3 class="lesson-title">المزيد من الكلمات المميزة</h3>
+                    
+                    <div class="word-example">
+                        <div>
+                            <strong>ش:</strong> شمس، شجرة، شوكة<br>
+                            <strong>ص:</strong> صاروخ، صابون، صندوق<br>
+                            <strong>ض:</strong> ضفدع، ضرس، ضوء<br>
+                            <strong>ط:</strong> طائرة، طبل، طماطم
+                        </div>
+                        <span class="word-emoji">🌳</span>
+                    </div>
+                    
+                    <div class="word-example">
+                        <div>
+                            <strong>ظ:</strong> ظفر، ظبي، ظرف<br>
+                            <strong>ع:</strong> عصفور، عنب، عين<br>
+                            <strong>غ:</strong> غيمة، غزال، غرفة<br>
+                            <strong>ف:</strong> فراشة، فستان، فيل
+                        </div>
+                        <span class="word-emoji">🦋</span>
+                    </div>
+                    
+                    <div class="word-example">
+                        <div>
+                            <strong>ق:</strong> قلم، قمر، قطة<br>
+                            <strong>ك:</strong> كتاب، كرة، كلب<br>
+                            <strong>ل:</strong> ليمون، لعبة، ليل<br>
+                            <strong>م:</strong> منزل، موز، مطر
+                        </div>
+                        <span class="word-emoji">🌙</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2>أغنية الحروف العربية</h2>
+            <p>استمع إلى هذه الأغنية الممتعة لتتعلم الحروف العربية بسهولة:</p>
+            
+            <div class="lesson-card">
+                <iframe class="lesson-img" src="https://www.youtube.com/embed/hVV87EFkBKY?si=9wGOMXbz0W5izBxG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <div class="lesson-content">
+                    <h3 class="lesson-title">أغنية الحروف الأبجدية</h3>
+                    <p>هذه الأغنية ستساعدك على حفظ ترتيب الحروف العربية ونطقها الصحيح بطريقة ممتعة وسهلة.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+      <!-- Start Footer -->
+      <footer style="background-color: #001328;">
+        <div  class="container-fluid">
+          <div class="logo-content">
+            <img class="logoo" src="imgs/new/logo2.png" alt="Logo" />
+            <p>
+              انضم إلينا في تشكيل مستقبل مشرق! شاهد لماذا تختارنا العائلات في جميع أنحاء البلاد لتكون المدرسة التمهيدية الخاصة بهم.
+    
+              العنوان: شارع عبدالله جاسر 93 الزهراء
+              
+              البريد الإلكتروني: info@medinakids.com
+              
+              الهاتف: 00966551105115
+            </p>
+          </div>
+          <div class="links">
+            <div class="link">
+              <h3>روابط هامة</h3>
+              <ul >
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="#"> بيت جدتي</a></li>
+                <li><a href="#"> مهاراتي</a></li>
+                <li><a href="artcleIslam.html"> فرائض وأخلاق</a></li>
+    
+    
+              </ul>
+            </div>
+            <div class="link">
+              <h3>هيا نلعب</h3>
+              <ul>
+                <li><a href="learnAr.html"> لعبة تعلم العربية</a></li>
+                <li><a href="learnDigits.html">لعبة تعلم الأرقام</a></li>
+                <li><a href="eatingPlay.html">لعبة آداب الطعام </a></li>
+    
+              </ul>
+            </div>
+    
+            <div class="link">
+              <h3>اللغة</h3>
+              <ul>
+                <li><a >العربية</a></li>
+              </ul>
+            </div>
+    
+    
+    
+          </div>
+          <div class="subscribe-us ">
+            <h3>مفالات مهمة</h3>
+           <div class="article d-flex flex-column gap-4">
+            <div class="item">
+             <div class="pic">
+              <img src="./imgs/new/Ar.jpg" alt="">
+              <div class="Fcover">
+    <a href="./articleAr.html" class="fa-solid fa-link"></a>
+              </div>
+             </div>
+            
+              <p class="ptitle">
+                طرق فعّالة لتعليم الأطفال الحروف
+              </p>
+            </div>
+            <div class="item">
+             <div class="pic">
+              <img src="./imgs/new/dig.png" alt="">
+              <div class="Fcover">
+    <a href="#" class="fa-solid fa-link"></a>
+              </div>
+             </div>
+            
+              <p class="ptitle">
+                طرق فعّالة لتعليم الأطفال الأرقام
+              </p>
+            </div>
+           </div>
+           
+          </div>
+        </div>
+    
+        
+        <div class="copyright text-white">
+          حقوق النشر &copy; 2025 .Madina كل الحقوق محفوظة.
+        </div>
+      </footer>
+      <!-- End Footer -->
+
+    <script>
+ function playSound(letter) {
+    const sounds = {
+        'alif': './imgs/Ar-audio/ألف.mp3',
+        'baa': './imgs/Ar-audio/باء.mp3',
+        'taa': './imgs/Ar-audio/تاء.mp3',
+        'thaa': './imgs/Ar-audio/ثاااء.mp3',
+        'jeem': './imgs/Ar-audio/جييم.mp3',
+        'haa': './imgs/Ar-audio/حاء.mp3',
+        'khaa': './imgs/Ar-audio/خاء.mp3',
+        'daal': './imgs/Ar-audio/دال.mp3',
+        'dhaal': './imgs/Ar-audio/ذال.mp3',
+        'raa': './imgs/Ar-audio/راء.mp3',
+        'zaay': './imgs/Ar-audio/زاى.mp3',
+        'seen': './imgs/Ar-audio/سين.mp3',
+        'sheen': './imgs/Ar-audio/شين.mp3',
+        'saad': './imgs/Ar-audio/صاد.mp3',
+        'daad': './imgs/Ar-audio/ضاد.mp3',
+        'taa2': './imgs/Ar-audio/طاء.mp3',
+        'thaa2': './imgs/Ar-audio/ظاء.mp3',
+        'ayn': './imgs/Ar-audio/عين.mp3',
+        'ghayn': './imgs/Ar-audio/غين.mp3',
+        'faa': './imgs/Ar-audio/فاء.mp3',
+        'qaaf': './imgs/Ar-audio/قاف.mp3',
+        'kaaf': './imgs/Ar-audio/كاف.mp3',
+        'laam': './imgs/Ar-audio/لام.mp3',
+        'meem': './imgs/Ar-audio/ميم.mp3',
+        'noon': './imgs/Ar-audio/نون.mp3',
+        'haa2': './imgs/Ar-audio/هاء.mp3',
+        'waaw': './imgs/Ar-audio/واو.mp3',
+        'yaa': './imgs/Ar-audio/ياء.mp3'
+    };
+
+    if (sounds[letter]) {
+        const audio = new Audio(sounds[letter]);
+        audio.play().catch(error => console.error("فشل تشغيل الصوت:", error));
+    } else {
+        console.warn("لا يوجد صوت لهذا الحرف:", letter);
+    }
+}
+
+
+    </script>
+</body>
+</html>

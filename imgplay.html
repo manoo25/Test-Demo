@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة المطابقة للأطفال</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #fff0f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #e91e63;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+        }
+        
+        .game-container {
+            background-color: #fce4ec;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 4px solid #f8bbd0;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            background-color: #f8bbd0;
+            padding: 10px 20px;
+            border-radius: 50px;
+            color: #880e4f;
+            font-weight: bold;
+        }
+        
+        .moves, .timer {
+            font-size: 18px;
+        }
+        
+        .board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .card {
+            height: 100px;
+            border-radius: 15px;
+            background-color: #f8bbd0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: #ad1457;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 3px solid #f48fb1;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+        
+        .card .front, .card .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+        }
+        
+        .card .front {
+            background-color: #fce4ec;
+            transform: rotateY(180deg);
+        }
+        
+        .card .back {
+            background-color: #f8bbd0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="%23f48fb1" d="M20 0c11 0 20 9 20 20s-9 20-20 20S0 31 0 20 9 0 20 0zm0 5a15 15 0 100 30 15 15 0 000-30z"/></svg>');
+            background-repeat: repeat;
+        }
+        
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .card.matched {
+            background-color: #a5d6a7;
+            border-color: #81c784;
+            transform: scale(0.95);
+            cursor: default;
+        }
+        
+        .card:hover:not(.flipped):not(.matched) {
+            transform: scale(1.05);
+            background-color: #f48fb1;
+        }
+        
+        button {
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background-color: #c2185b;
+            transform: scale(1.05);
+        }
+        
+        .win-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 192, 203, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+        
+        .win-message.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .win-content {
+            background-color: #fce4ec;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border: 4px solid #f8bbd0;
+            transform: scale(0.8);
+            transition: transform 0.5s ease;
+        }
+        
+        .win-message.show .win-content {
+            transform: scale(1);
+        }
+        
+        .win-content h2 {
+            color: #e91e63;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        
+        .win-stats {
+            font-size: 20px;
+            color: #7b1fa2;
+            margin-bottom: 20px;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f48fb1;
+            opacity: 0;
+        }
+        
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .game-container {
+            
+            max-width: 350px;
+           
+        }
+        }
+        
+        .sticker {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.2;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <h1>لعبة مطابقة الصور للأطفال 🎀</h1>
+    
+    <div class="game-container">
+        <div class="game-info">
+            <div class="moves">عدد المحاولات: <span id="moves">0</span></div>
+            <div class="timer">الوقت: <span id="timer">00:00</span></div>
+        </div>
+        
+        <div class="board" id="board"></div>
+        
+        <button id="reset-btn">لعبة جديدة</button>
+    </div>
+    
+    <div class="win-message" id="win-message">
+        <div class="win-content">
+            <h2>أحسنت! فزت 🎉</h2>
+            <div class="win-stats">
+                <p>عدد المحاولات: <span id="final-moves">0</span></p>
+                <p>الوقت المستغرق: <span id="final-time">00:00</span></p>
+            </div>
+            <button id="play-again-btn">العب مرة أخرى</button>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const board = document.getElementById('board');
+            const movesDisplay = document.getElementById('moves');
+            const timerDisplay = document.getElementById('timer');
+            const resetBtn = document.getElementById('reset-btn');
+            const winMessage = document.getElementById('win-message');
+            const finalMoves = document.getElementById('final-moves');
+            const finalTime = document.getElementById('final-time');
+            const playAgainBtn = document.getElementById('play-again-btn');
+            
+            // Emojis for the game (8 pairs)
+            const emojis = ['🌸', '🐰', '🦄', '🍭', '🎀', '🧸', '🌈', '🎈'];
+            let cards = [...emojis, ...emojis];
+            
+            let hasFlippedCard = false;
+            let lockBoard = false;
+            let firstCard, secondCard;
+            let moves = 0;
+            let matchedPairs = 0;
+            let timer = null;
+            let seconds = 0;
+            
+            // Initialize the game
+            function initGame() {
+                // Reset game state
+                hasFlippedCard = false;
+                lockBoard = false;
+                firstCard = secondCard = null;
+                moves = 0;
+                matchedPairs = 0;
+                seconds = 0;
+                
+                // Update UI
+                movesDisplay.textContent = moves;
+                updateTimer();
+                
+                // Clear any existing timer
+                if (timer) clearInterval(timer);
+                
+                // Start new timer
+                timer = setInterval(updateTimer, 1000);
+                
+                // Shuffle cards
+                shuffleCards();
+                
+                // Create board
+                createBoard();
+            }
+            
+            // Shuffle cards using Fisher-Yates algorithm
+            function shuffleCards() {
+                for (let i = cards.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [cards[i], cards[j]] = [cards[j], cards[i]];
+                }
+            }
+            
+            // Create the game board
+            function createBoard() {
+                board.innerHTML = '';
+                
+                cards.forEach((emoji, index) => {
+                    const card = document.createElement('div');
+                    card.classList.add('card');
+                    card.dataset.index = index;
+                    
+                    const front = document.createElement('div');
+                    front.classList.add('front');
+                    front.textContent = emoji;
+                    
+                    const back = document.createElement('div');
+                    back.classList.add('back');
+                    
+                    card.appendChild(front);
+                    card.appendChild(back);
+                    
+                    card.addEventListener('click', flipCard);
+                    board.appendChild(card);
+                });
+            }
+            
+            // Flip a card
+            function flipCard() {
+                if (lockBoard) return;
+                if (this === firstCard) return;
+                if (this.classList.contains('matched')) return;
+                
+                this.classList.add('flipped');
+                
+                if (!hasFlippedCard) {
+                    // First click
+                    hasFlippedCard = true;
+                    firstCard = this;
+                    return;
+                }
+                
+                // Second click
+                secondCard = this;
+                lockBoard = true;
+                moves++;
+                movesDisplay.textContent = moves;
+                
+                checkForMatch();
+            }
+            
+            // Check if cards match
+            function checkForMatch() {
+                const isMatch = firstCard.querySelector('.front').textContent === 
+                               secondCard.querySelector('.front').textContent;
+                
+                if (isMatch) {
+                    disableMatchedCards();
+                    matchedPairs++;
+                    
+                    if (matchedPairs === emojis.length) {
+                        setTimeout(() => {
+                            endGame();
+                        }, 1000);
+                    }
+                } else {
+                    unflipCards();
+                }
+            }
+            
+            // Disable matched cards
+            function disableMatchedCards() {
+                firstCard.classList.add('matched');
+                secondCard.classList.add('matched');
+                firstCard.removeEventListener('click', flipCard);
+                secondCard.removeEventListener('click', flipCard);
+                
+                resetBoard();
+            }
+            
+            // Unflip unmatched cards
+            function unflipCards() {
+                setTimeout(() => {
+                    firstCard.classList.remove('flipped');
+                    secondCard.classList.remove('flipped');
+                    
+                    resetBoard();
+                }, 1000);
+            }
+            
+            // Reset board state
+            function resetBoard() {
+                [hasFlippedCard, lockBoard] = [false, false];
+                [firstCard, secondCard] = [null, null];
+            }
+            
+            // Update timer
+            function updateTimer() {
+                seconds++;
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = seconds % 60;
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+            }
+            
+            // End game
+            function endGame() {
+                clearInterval(timer);
+                finalMoves.textContent = moves;
+                finalTime.textContent = timerDisplay.textContent;
+                winMessage.classList.add('show');
+                createConfetti();
+            }
+            
+            // Create confetti effect
+            function createConfetti() {
+                const colors = ['#f48fb1', '#e91e63', '#f8bbd0', '#c2185b', '#fce4ec'];
+                
+                for (let i = 0; i < 100; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = `${Math.random() * 100}vw`;
+                    confetti.style.width = `${5 + Math.random() * 10}px`;
+                    confetti.style.height = `${5 + Math.random() * 10}px`;
+                    confetti.style.animation = `confetti-fall ${3 + Math.random() * 4}s linear forwards`;
+                    confetti.style.animationDelay = `${Math.random() * 2}s`;
+                    document.body.appendChild(confetti);
+                    
+                    // Remove confetti after animation
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 7000);
+                }
+            }
+            
+            // Reset game
+            function resetGame() {
+                winMessage.classList.remove('show');
+                initGame();
+            }
+            
+            // Add event listeners
+            resetBtn.addEventListener('click', resetGame);
+            playAgainBtn.addEventListener('click', resetGame);
+            
+            // Add some random stickers for fun
+            const stickers = ['🌸', '🧸', '🎀', '🦄', '🍭', '🎈', '🐰', '🌈'];
+            for (let i = 0; i < 15; i++) {
+                const sticker = document.createElement('div');
+                sticker.className = 'sticker';
+                sticker.textContent = stickers[Math.floor(Math.random() * stickers.length)];
+                sticker.style.top = `${Math.random() * 100}%`;
+                sticker.style.left = `${Math.random() * 100}%`;
+                sticker.style.transform = `rotate(${Math.random() * 360}deg) scale(${0.5 + Math.random()})`;
+                document.body.appendChild(sticker);
+            }
+            
+            // Start the game
+            initGame();
+        });
+    </script>
+</body>
+</html>

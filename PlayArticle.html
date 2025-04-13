@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+
+    <title>مدينة الأطفال - تعليم الفرائض والأخلاق الإسلامية</title>
+    <style>
+        :root {
+            --primary-color: #E91E63; /* وردي غامق */
+            --secondary-color: #F8BBD0; /* وردي فاتح */
+            --light-color: #FCE4EC; /* وردي فاتح جداً */
+            --dark-color: #C2185B; /* وردي داكن */
+            --accent-color: #FF80AB; /* وردي متوسط */
+            --text-color: #333;
+        }
+        
+        body {
+            font-family: 'Tajawal', 'Arial', sans-serif;
+            background-color: #FFF5F7; /* خلفية وردية فاتحة */
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::after {
+            content: "✿";
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.1;
+            right: -50px;
+            top: -50px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-top: 50px;
+            border-right: 5px solid var(--accent-color);
+            padding-right: 15px;
+        }
+        
+        h3 {
+            color: var(--dark-color);
+            font-size: 1.6rem;
+            margin-top: 30px;
+        }
+        
+        .intro {
+            font-size: 1.2rem;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            border-right: 5px solid var(--secondary-color);
+            position: relative;
+        }
+        
+        .intro::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23E91E63" d="M50 0c27.6 0 50 22.4 50 50S77.6 100 50 100 0 77.6 0 50 22.4 0 50 0zm0 20c-16.6 0-30 13.4-30 30s13.4 30 30 30 30-13.4 30-30-13.4-30-30-30z"/></svg>');
+            background-repeat: no-repeat;
+            opacity: 0.1;
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+        
+        .pillars-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .pillar-card {
+            background-color: var(--light-color);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border-top: 5px solid var(--primary-color);
+        }
+        
+        .pillar-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .pillar-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .ethics-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .ethic-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-right: 3px solid var(--secondary-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .ethic-icon {
+            font-size: 1.8rem;
+            margin-left: 15px;
+            color: var(--dark-color);
+            flex-shrink: 0;
+        }
+        
+        .quran-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .quran-verse {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            line-height: 2;
+        }
+        
+        .quran-ref {
+            font-style: italic;
+        }
+        
+        .activity {
+            display: flex;
+            align-items: center;
+            background-color: var(--light-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .activity-icon {
+            font-size: 2rem;
+            margin-left: 20px;
+            color: var(--accent-color);
+            flex-shrink: 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: var(--dark-color);
+            color: white;
+            margin-top: 50px;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .hadith-box {
+            background-color: #FFF0F5;
+            border-right: 5px solid var(--accent-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            .pillars-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body >
+ 
+    <header>
+        <div class="container p-0 ">
+            <h1>مدينة الأطفال - تعليم الفرائض والأخلاق الإسلامية</h1>
+            <p style="font-size: 18px">نور الإيمان يضيء قلوبنا الصغيرة</p>
+            <a class="btn-outline-warning btn px-5 py-2 rounded-5 " href="./index.html">الرئيسية</a>
+        </div>
+    </header>
+    
+    <div class="w-100 m-0">
+     
+        
+            <!-- Portfolio-page-start -->
+  <div  id="portfolio"  data-bs-spy="scroll" data-bs-target="#navbar-example2"  class=" Portfolio container-fluid pb-4 pt-0 m-0  ">
+    <div id="services" style="height: 160px;" class="container d-flex flex-column justify-content-center ">
+      <div class="head  text-center d-flex flex-column align-items-center ">
+       <div style="height: 16vh;" class="title">
+         <h3  class="title-dot">ألعاب ذكاء</h3>
+         <div class="ti-back">
+                        </div>    
+       </div>
+       </div>     
+       </div>
+   
+    <div class="tab-content  pt-5 mt-2  pb-5" id="nav-tabContent">
+      <div class="tab-pane fade show  active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+<div class="row ps-4 pe-4 gy-4 gx-4 pb-4">
+ 
+  <div class="contain-item col-lg-4 col-md-6 pe-4  pb-2  ">
+    <div class="item position-relative ">
+      <img style="height: 350px;"  class="w-100" src="imgs/new/Arabic.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover d-flex flex-column align-items-center justify-content-center ">
+          <h6 style="font-size: 20px;font-weight: 700;letter-spacing: 0.5px;">لعبة تعلم العربية</h6>
+        
+          <a href="./learnAr.html" style="font-size: 15px;font-weight: 600; padding: 12px 48px;  transition: all ease 0.5s;" class="btn  btn-warning mt-3 " >إلعب الأن</a>
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="contain-item col-lg-4 col-md-6 pe-4  pb-2">
+    <div class="item position-relative ">
+      <img style="height: 350px;"  class="w-100" src="imgs/new/digits.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover d-flex flex-column align-items-center justify-content-center ">
+          <h6 style="font-size: 20px;font-weight: 700;letter-spacing: 0.5px;">لعبة تعلم الأرقام </h6>
+          <a href="./learnDigits.html" style="font-size: 15px;font-weight: 600; padding: 12px 48px;  transition: all ease 0.5s;" class="btn  btn-warning mt-3 " >إلعب الأن</a>
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="contain-item col-lg-4 col-md-6 pe-4  pb-2">
+    <div class="item position-relative ">
+      <img style="height: 350px;"  class="w-100" src="imgs/new/eat.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover d-flex flex-column align-items-center justify-content-center ">
+          <h6 style="font-size: 20px;font-weight: 700;letter-spacing: 0.5px;">لعبة آداب الطعام</h6>
+          <a href="./eatingPlay.html" style="font-size: 15px;font-weight: 600; padding: 12px 48px;  transition: all ease 0.5s;" class="btn  btn-warning mt-3 " >إلعب الأن</a>
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="contain-item col-lg-4 col-md-6 pe-4  pb-2">
+    <div class="item position-relative ">
+      <img style="height: 350px;"  class="w-100" src="imgs/new/xo.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover d-flex flex-column align-items-center justify-content-center ">
+          <h6 style="font-size: 20px;font-weight: 700;letter-spacing: 0.5px;">لعبة XO للأطفال </h6>
+          <a href="./xo.html" style="font-size: 15px;font-weight: 600; padding: 12px 48px;  transition: all ease 0.5s;" class="btn  btn-warning mt-3 " >إلعب الأن</a>
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="contain-item col-lg-4 col-md-6 pe-4  pb-2">
+    <div class="item position-relative ">
+      <img style="height: 350px;" class="w-100" src="imgs/new/images.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover d-flex flex-column align-items-center justify-content-center ">
+          <h6 style="font-size: 20px;font-weight: 700;letter-spacing: 0.5px;">لعبة مطابقة الصور للأطفال </h6>
+          <a href="./imgplay.html" style="font-size: 15px;font-weight: 600; padding: 12px 48px;  transition: all ease 0.5s;" class="btn  btn-warning mt-3 " >إلعب الأن</a>
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="contain-item col-lg-4 col-md-6 pe-4  pb-2">
+    <div class="item position-relative ">
+      <img style="height: 350px;" class="w-100" src="imgs/new/Math.png" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover d-flex flex-column align-items-center justify-content-center ">
+          <h6 style="font-size: 20px;font-weight: 700;letter-spacing: 0.5px;">لعبة الجمع والطرح</h6>
+          <a href="./MAth.html" style="font-size: 15px;font-weight: 600; padding: 12px 48px;  transition: all ease 0.5s;" class="btn  btn-warning mt-3 " >إلعب الأن</a>
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="contain-item col-lg-4 col-md-6 pe-4  pb-2">
+    <div class="item position-relative ">
+      <img style="height: 350px;" class="w-100" src="imgs/new/fruit.jpeg" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover d-flex flex-column align-items-center justify-content-center ">
+          <h6 style="font-size: 20px;font-weight: 700;letter-spacing: 0.5px;">لعبة اختيار الفواكه</h6>
+          <a href="./matchFruits.html" style="font-size: 15px;font-weight: 600; padding: 12px 48px;  transition: all ease 0.5s;" class="btn  btn-warning mt-3 " >إلعب الأن</a>
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="contain-item col-lg-4 col-md-6 pe-4  pb-2">
+    <div class="item position-relative ">
+      <img style="height: 350px;" class="w-100" src="imgs/new/animal.jpeg" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover d-flex flex-column align-items-center justify-content-center ">
+          <h6 style="font-size: 20px;font-weight: 700;letter-spacing: 0.5px;">لعبة اختيار الحيوانات</h6>
+          <a href="./MatchAnimal.html" style="font-size: 15px;font-weight: 600; padding: 12px 48px;  transition: all ease 0.5s;" class="btn  btn-warning mt-3 " >إلعب الأن</a>
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  <div class="contain-item col-lg-4 col-md-6 pe-4  pb-2">
+    <div class="item position-relative ">
+      <img style="height: 350px;" class="w-100" src="imgs/new/person.jpeg" alt="">
+      <div class="contain-cover bg-transparent ">
+        <div class="cover d-flex flex-column align-items-center justify-content-center ">
+          <h6 style="font-size: 20px;font-weight: 700;letter-spacing: 0.5px;">لعبة اختيار الأشخاص </h6>
+          <a href="./matchPerson.html" style="font-size: 15px;font-weight: 600; padding: 12px 48px;  transition: all ease 0.5s;" class="btn  btn-warning mt-3 " >إلعب الأن</a>
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+
+</div>
+
+
+      </div>
+     
+    </div>
+  </div>
+   <!-- Portfolio-page-end -->
+        
+       
+    </div>
+             <!-- Start Footer -->
+  <footer style="background-color: #001328;margin-top: 0;border-radius: 0;">
+    <div  class="container-fluid">
+      <div class="logo-content">
+        <img class="logoo" src="imgs/new/logo2.png" alt="Logo" />
+        <p>
+          انضم إلينا في تشكيل مستقبل مشرق! شاهد لماذا تختارنا العائلات في جميع أنحاء البلاد لتكون المدرسة التمهيدية الخاصة بهم.
+
+          العنوان: شارع عبدالله جاسر 93 الزهراء
+          
+          البريد الإلكتروني: info@medinakids.com
+          
+          الهاتف: 00966551105115
+        </p>
+      </div>
+      <div class="links">
+        <div class="link">
+          <h3>روابط هامة</h3>
+          <ul >
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="#"> بيت جدتي</a></li>
+            <li><a href="#"> مهاراتي</a></li>
+            <li><a href="artcleIslam.html"> فرائض وأخلاق</a></li>
+
+
+          </ul>
+        </div>
+        <div class="link">
+          <h3>هيا نلعب</h3>
+          <ul>
+            <li><a href="learnAr.html"> لعبة تعلم العربية</a></li>
+            <li><a href="learnDigits.html">لعبة تعلم الأرقام</a></li>
+            <li><a href="eatingPlay.html">لعبة آداب الطعام </a></li>
+
+          </ul>
+        </div>
+
+        <div class="link">
+          <h3>اللغة</h3>
+          <ul>
+            <li><a >العربية</a></li>
+          </ul>
+        </div>
+
+
+
+      </div>
+      <div class="subscribe-us ">
+        <h3>مفالات مهمة</h3>
+       <div class="article d-flex flex-column gap-4">
+        <div class="item">
+         <div class="pic">
+          <img src="./imgs/new/Ar.jpg" alt="">
+          <div class="Fcover">
+<a href="./articleAr.html" class="fa-solid fa-link"></a>
+          </div>
+         </div>
+        
+          <p class="ptitle">
+            طرق فعّالة لتعليم الأطفال الحروف
+          </p>
+        </div>
+        <div class="item">
+         <div class="pic">
+          <img src="./imgs/new/dig.png" alt="">
+          <div class="Fcover">
+<a href="#" class="fa-solid fa-link"></a>
+          </div>
+         </div>
+        
+          <p class="ptitle">
+            طرق فعّالة لتعليم الأطفال الأرقام
+          </p>
+        </div>
+       </div>
+       
+      </div>
+    </div>
+
+    
+    <div class="copyright text-white">
+      حقوق النشر &copy; 2025 .Madina كل الحقوق محفوظة.
+    </div>
+  </footer>
+  <!-- End Footer --> 
+   
+</body>
+</html>

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة تعلم العربية للأطفال</title>
+    <style>
+        :root {
+            --main-pink: #e91e63;
+            --light-pink: #f8bbd0;
+            --lighter-pink: #fce4ec;
+            --dark-pink: #c2185b;
+            --purple: #9c27b0;
+            --green: #81c784;
+            --red: #ef9a9a;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Tajawal', 'Comic Sans MS', cursive, sans-serif;
+            background-color: #fff0f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: var(--main-pink);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+            font-size: 2.2rem;
+        }
+        
+        .game-container {
+            background-color: var(--lighter-pink);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 4px solid var(--light-pink);
+            width: 100%;
+            max-width: 600px;
+            margin: 10px 0;
+         
+        }
+        
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            background-color: var(--light-pink);
+            padding: 10px 15px;
+            border-radius: 50px;
+            color: #880e4f;
+            font-weight: bold;
+            margin-bottom: 5px;
+           
+           
+        }
+        
+        .level, .score {
+            font-size: 1.1rem;
+        }
+        
+        .game-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        
+          
+        }
+        
+        .letter-card {
+            background-color: white;
+            width: 90px;
+            height: 90px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: var(--main-pink);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+          
+        }
+        
+        .word-card {
+            background-color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-size: 2rem;
+            color: var(--purple);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+            min-width: 200px;
+            text-align: center;
+           
+        }
+        
+        .image-container {
+            font-size: 4rem;
+            margin: 10px 0;
+            height: 100px;
+          
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            width: 100%;
+           margin-top: 0px;
+           
+        }
+        
+        .option-btn {
+            background-color: white;
+            border: 3px solid var(--light-pink);
+            border-radius: 15px;
+            padding: 12px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #880e4f;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        .option-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .option-btn.correct {
+            background-color: var(--green);
+            border-color: #66bb6a;
+            color: #2e7d32;
+        }
+        
+        .option-btn.incorrect {
+            background-color: var(--red);
+            border-color: #e57373;
+            color: #c62828;
+        }
+        
+        .feedback {
+            font-size: 1.3rem;
+            font-weight: bold;
+            min-height: 40px;
+            margin: 10px 0;
+            color: var(--purple);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .action-btn {
+            background-color: var(--main-pink);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Tajawal', sans-serif;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .action-btn:hover {
+            background-color: var(--dark-pink);
+            transform: scale(1.05);
+        }
+        
+        .action-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background-color: var(--light-pink);
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--main-pink);
+            border-radius: 5px;
+            transition: width 0.4s ease;
+            width: 0%;
+        }
+        
+        .celebration {
+            position: absolute;
+            font-size: 2rem;
+            pointer-events: none;
+            animation: float-up 2s ease-out forwards;
+            z-index: 10;
+        }
+        
+        @keyframes float-up {
+            0% { transform: translateY(0) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-150px) scale(1.5); opacity: 0; }
+        }
+        
+        @media (max-width: 500px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .letter-card {
+                width: 100px;
+                height: 100px;
+                font-size: 4rem;
+            }
+            
+            .word-card {
+                font-size: 1.8rem;
+            }
+            
+            .image-container {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>🎀 لعبة تعلم العربية 🎀</h1>
+    
+    <div class="game-container">
+        <div class="game-header">
+            <div class="level">المستوى: <span id="level">1</span></div>
+            <div class="score">النقاط: <span id="score">0</span></div>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        
+        <div class="game-content" id="game-content">
+            <div class="letter-card" id="letter-card">أ</div>
+            <div class="image-container" id="image-container">🐰</div>
+            
+            <div class="feedback" id="feedback"></div>
+            
+            <div class="options-grid" id="options-grid">
+                <!-- سيتم إضافة الخيارات هنا بالجافاسكريبت -->
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="action-btn" id="next-btn" disabled>التالي</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // عناصر واجهة المستخدم
+            const letterCard = document.getElementById('letter-card');
+            const wordCard = document.getElementById('word-card');
+            const imageContainer = document.getElementById('image-container');
+            const feedbackEl = document.getElementById('feedback');
+            const optionsGrid = document.getElementById('options-grid');
+            const nextBtn = document.getElementById('next-btn');
+            const levelEl = document.getElementById('level');
+            const scoreEl = document.getElementById('score');
+            const progressBar = document.getElementById('progress-bar');
+            const gameContent = document.getElementById('game-content');
+            
+            // بيانات اللعبة
+            const gameData = [
+                {
+                    letter: 'أ',
+                    words: [
+                        {word: 'أرنب', emoji: '🐰'},
+                        {word: 'أسد', emoji: '🦁'},
+                        {word: 'أرض', emoji: '🌍'},
+                        {word: 'إصبع', emoji: '👆'}
+                    ]
+                },
+                {
+                    letter: 'ب',
+                    words: [
+                        {word: 'بطة', emoji: '🦆'},
+                        {word: 'باب', emoji: '🚪'},
+                        {word: 'برتقال', emoji: '🍊'},
+                        {word: 'بقرة', emoji: '🐄'}
+                    ]
+                },
+                {
+                    letter: 'ت',
+                    words: [
+                        {word: 'تفاحة', emoji: '🍎'},
+                        {word: 'تاج', emoji: '👑'},
+                        {word: 'تمساح', emoji: '🐊'},
+                        {word: 'تلفاز', emoji: '📺'}
+                    ]
+                },
+                {
+                    letter: 'ث',
+                    words: [
+                        {word: 'ثعبان', emoji: '🐍'},
+                        {word: 'ثمار', emoji: '🍓'},
+                        {word: 'ثور', emoji: '🐂'},
+                        {word: 'ثوب', emoji: '👗'}
+                    ]
+                },
+                {
+                    letter: 'ج',
+                    words: [
+                        {word: 'جمل', emoji: '🐫'},
+                        {word: 'جزر', emoji: '🥕'},
+                        {word: 'جرس', emoji: '🔔'},
+                        {word: 'جبل', emoji: '⛰️'}
+                    ]
+                }
+            ];
+            
+            // حالة اللعبة
+            let currentLevel = 0;
+            let currentWordIndex = 0;
+            let score = 0;
+            let correctAnswer = '';
+            let gameActive = true;
+            
+            // تهيئة اللعبة
+            function initGame() {
+                currentLevel = 0;
+                currentWordIndex = 0;
+                score = 0;
+                updateUI();
+                loadLevel();
+            }
+            
+            // تحميل المستوى الحالي
+            function loadLevel() {
+                if (currentLevel >= gameData.length) {
+                    endGame();
+                    return;
+                }
+                
+                const levelData = gameData[currentLevel];
+                letterCard.textContent = levelData.letter;
+                loadWord();
+            }
+            
+            // تحميل الكلمة الحالية
+            function loadWord() {
+                const levelData = gameData[currentLevel];
+                
+                if (currentWordIndex >= levelData.words.length) {
+                    currentLevel++;
+                    currentWordIndex = 0;
+                    loadLevel();
+                    return;
+                }
+                
+                const wordData = levelData.words[currentWordIndex];
+             
+                imageContainer.textContent = wordData.emoji;
+                correctAnswer = wordData.word;
+                
+                generateOptions(levelData.words, wordData.word);
+                
+                // إعادة تعيين الحالة
+                feedbackEl.textContent = '';
+                nextBtn.disabled = true;
+                gameActive = true;
+                
+                updateProgress();
+            }
+            
+            // توليد خيارات الإجابة
+            function generateOptions(words, correctWord) {
+                optionsGrid.innerHTML = '';
+                
+                // إنشاء قائمة بالخيارات (الإجابة الصحيحة + 3 خيارات عشوائية)
+                let options = [correctWord];
+                let allWords = words.map(w => w.word);
+                
+                while (options.length < 4 && options.length < allWords.length) {
+                    const randomWord = allWords[Math.floor(Math.random() * allWords.length)];
+                    if (!options.includes(randomWord)) {
+                        options.push(randomWord);
+                    }
+                }
+                
+                // خلط الخيارات
+                shuffleArray(options);
+                
+                // إنشاء أزرار الخيارات
+                options.forEach(option => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.textContent = option;
+                    btn.addEventListener('click', () => handleAnswer(option, btn));
+                    optionsGrid.appendChild(btn);
+                });
+            }
+            
+            // معالجة إجابة اللاعب
+            function handleAnswer(selectedOption, btn) {
+                if (!gameActive) return;
+                
+                gameActive = false;
+                
+                if (selectedOption === correctAnswer) {
+                    // إجابة صحيحة
+                    btn.classList.add('correct');
+                    feedbackEl.textContent = 'أحسنت! إجابة صحيحة 🌟';
+                    feedbackEl.style.color = '#2e7d32';
+                    score += 10;
+                    createCelebration();
+                } else {
+                    // إجابة خاطئة
+                    btn.classList.add('incorrect');
+                    feedbackEl.textContent = `إجابة خاطئة! الكلمة الصحيحة: ${correctAnswer}`;
+                    feedbackEl.style.color = '#c62828';
+                    
+                    // إظهار الإجابة الصحيحة
+                    document.querySelectorAll('.option-btn').forEach(btn => {
+                        if (btn.textContent === correctAnswer) {
+                            btn.classList.add('correct');
+                        }
+                    });
+                }
+                
+                updateUI();
+                nextBtn.disabled = false;
+            }
+            
+            // إنشاء تأثيرات الاحتفال
+            function createCelebration() {
+                const emojis = ['🎉', '✨', '🌟', '🎈', '👍'];
+                
+                for (let i = 0; i < 8; i++) {
+                    const celeb = document.createElement('div');
+                    celeb.className = 'celebration';
+                    celeb.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    celeb.style.left = `${Math.random() * 80 + 10}%`;
+                    celeb.style.bottom = '20%';
+                    celeb.style.animationDelay = `${i * 0.2}s`;
+                    gameContent.appendChild(celeb);
+                    
+                    setTimeout(() => {
+                        celeb.remove();
+                    }, 2000);
+                }
+            }
+            
+            // الانتقال للكلمة التالية
+            function nextWord() {
+                currentWordIndex++;
+                loadWord();
+            }
+            
+            // نهاية اللعبة
+            function endGame() {
+                feedbackEl.textContent = `🎊 مبروك! أكملت جميع المستويات بنقاط: ${score}`;
+                optionsGrid.innerHTML = '';
+                nextBtn.textContent = 'العب مرة أخرى';
+                nextBtn.onclick = initGame;
+                nextBtn.disabled = false;
+            }
+            
+            // تحديث واجهة المستخدم
+            function updateUI() {
+                levelEl.textContent = currentLevel + 1;
+                scoreEl.textContent = score;
+            }
+            
+            // تحديث شريط التقدم
+            function updateProgress() {
+                const totalWords = gameData.reduce((sum, level) => sum + level.words.length, 0);
+                const completedWords = gameData.slice(0, currentLevel).reduce((sum, level) => sum + level.words.length, 0) + currentWordIndex;
+                const progress = (completedWords / totalWords) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+            
+            // خلط المصفوفة
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+            
+            // إضافة مستمعين للأحداث
+            nextBtn.addEventListener('click', nextWord);
+            
+            // بدء اللعبة
+            initGame();
+        });
+    </script>
+</body>
+</html>

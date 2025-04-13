@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+
+    <title>مدينة الأطفال - تعليم الفرائض والأخلاق الإسلامية</title>
+    <style>
+        :root {
+            --primary-color: #E91E63; /* وردي غامق */
+            --secondary-color: #F8BBD0; /* وردي فاتح */
+            --light-color: #FCE4EC; /* وردي فاتح جداً */
+            --dark-color: #C2185B; /* وردي داكن */
+            --accent-color: #FF80AB; /* وردي متوسط */
+            --text-color: #333;
+        }
+        
+        body {
+            font-family: 'Tajawal', 'Arial', sans-serif;
+            background-color: #FFF5F7; /* خلفية وردية فاتحة */
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::after {
+            content: "✿";
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.1;
+            right: -50px;
+            top: -50px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-top: 50px;
+            border-right: 5px solid var(--accent-color);
+            padding-right: 15px;
+        }
+        
+        h3 {
+            color: var(--dark-color);
+            font-size: 1.6rem;
+            margin-top: 30px;
+        }
+        
+        .intro {
+            font-size: 1.2rem;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            border-right: 5px solid var(--secondary-color);
+            position: relative;
+        }
+        
+        .intro::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23E91E63" d="M50 0c27.6 0 50 22.4 50 50S77.6 100 50 100 0 77.6 0 50 22.4 0 50 0zm0 20c-16.6 0-30 13.4-30 30s13.4 30 30 30 30-13.4 30-30-13.4-30-30-30z"/></svg>');
+            background-repeat: no-repeat;
+            opacity: 0.1;
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+        
+        .pillars-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .pillar-card {
+            background-color: var(--light-color);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border-top: 5px solid var(--primary-color);
+        }
+        
+        .pillar-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .pillar-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .ethics-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .ethic-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-right: 3px solid var(--secondary-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .ethic-icon {
+            font-size: 1.8rem;
+            margin-left: 15px;
+            color: var(--dark-color);
+            flex-shrink: 0;
+        }
+        
+        .quran-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .quran-verse {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            line-height: 2;
+        }
+        
+        .quran-ref {
+            font-style: italic;
+        }
+        
+        .activity {
+            display: flex;
+            align-items: center;
+            background-color: var(--light-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .activity-icon {
+            font-size: 2rem;
+            margin-left: 20px;
+            color: var(--accent-color);
+            flex-shrink: 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: var(--dark-color);
+            color: white;
+            margin-top: 50px;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .hadith-box {
+            background-color: #FFF0F5;
+            border-right: 5px solid var(--accent-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            .pillars-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body >
+ 
+    <header>
+        <div class="container p-0">
+            <h1>مدينة الأطفال - تعليم الفرائض والأخلاق الإسلامية</h1>
+            <p style="font-size: 18px">نور الإيمان يضيء قلوبنا الصغيرة</p>
+            <a class="btn-outline-warning btn px-5 py-2 rounded-5 " href="./index.html">الرئيسية</a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="intro">
+            <h2>مرحباً بكم في مدينة الأطفال الإسلامية</h2>
+            <p>في هذه المدينة الصغيرة، نتعلم معاً فرائض ديننا الحنيف والأخلاق الحميدة التي علمنا إياها رسولنا الكريم ﷺ. نستخدم طرقاً ممتعة وسهلة لتعليم الأطفال أسس الإسلام بطريقة تناسب أعمارهم.</p>
+        </section>
+        
+        <section class="section">
+            <h2>أركان الإسلام الخمسة</h2>
+            
+            <div class="pillars-container">
+                <div class="pillar-card">
+                    <div class="pillar-icon">🕌</div>
+                    <h3>الشهادتان</h3>
+                    <p>أن تشهد أن لا إله إلا الله وأن محمداً رسول الله، وهي مفتاح الدخول إلى الإسلام.</p>
+                </div>
+                
+                <div class="pillar-card">
+                    <div class="pillar-icon">🕋</div>
+                    <h3>إقامة الصلاة</h3>
+                    <p>الصلاة عماد الدين، نعلم الأطفال كيفية الوضوء والصلاة بأسلوب مبسط.</p>
+                </div>
+                
+                <div class="pillar-card">
+                    <div class="pillar-icon">💰</div>
+                    <h3>إيتاء الزكاة</h3>
+                    <p>نعلم الأطفال معنى الزكاة وأهمية مساعدة المحتاجين وشاركة الآخرين.</p>
+                </div>
+                
+                <div class="pillar-card">
+                    <div class="pillar-icon">🌙</div>
+                    <h3>صوم رمضان</h3>
+                    <p>نشرح مفهوم الصوم وأهميته، ونعلمهم كيفية صيام بعض النهار تدريجياً.</p>
+                </div>
+                
+                <div class="pillar-card">
+                    <div class="pillar-icon">✈️</div>
+                    <h3>حج البيت</h3>
+                    <p>نروي قصة بيت الله الحرام ونسعى لزرع حب الحج والعمرة في قلوب الصغار.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2>الأخلاق الحميدة في الإسلام</h2>
+            
+            <div class="hadith-box">
+                "إنما بعثت لأتمم مكارم الأخلاق" - رسول الله ﷺ
+            </div>
+            
+            <div class="ethics-container">
+                <div class="ethic-card">
+                    <span class="ethic-icon">❤️</span>
+                    <div>
+                        <h3>الرحمة</h3>
+                        <p>الرحمة بالصغار والكبار والحيوانات، كما علمنا رسولنا الكريم.</p>
+                    </div>
+                </div>
+                
+                <div class="ethic-card">
+                    <span class="ethic-icon">🤲</span>
+                    <div>
+                        <h3>الصدق</h3>
+                        <p>الصدق في القول والعمل، فهو منجاة وصفة المؤمن الحق.</p>
+                    </div>
+                </div>
+                
+                <div class="ethic-card">
+                    <span class="ethic-icon">🙏</span>
+                    <div>
+                        <h3>الاحترام</h3>
+                        <p>احترام الكبار والعطف على الصغار، وتقدير الجميع.</p>
+                    </div>
+                </div>
+                
+                <div class="ethic-card">
+                    <span class="ethic-icon">🤝</span>
+                    <div>
+                        <h3>التعاون</h3>
+                        <p>مساعدة الآخرين والعمل معاً لتحقيق الخير.</p>
+                    </div>
+                </div>
+                
+                <div class="ethic-card">
+                    <span class="ethic-icon">😊</span>
+                    <div>
+                        <h3>الابتسامة</h3>
+                        <p>التبسم في وجه أخيك صدقة، كما قال النبي ﷺ.</p>
+                    </div>
+                </div>
+                
+                <div class="ethic-card">
+                    <span class="ethic-icon">🗣️</span>
+                    <div>
+                        <h3>الكلمة الطيبة</h3>
+                        <p>الكلمة الطيبة صدقة، نختار ألفاظنا بعناية.</p>
+                    </div>
+                </div>
+                
+                <div class="ethic-card">
+                    <span class="ethic-icon">🧹</span>
+                    <div>
+                        <h3>النظافة</h3>
+                        <p>النظافة من الإيمان، نعتني بأنفسنا وبيئتنا.</p>
+                    </div>
+                </div>
+                
+                <div class="ethic-card">
+                    <span class="ethic-icon">⏰</span>
+                    <div>
+                        <h3>الالتزام بالوقت</h3>
+                        <p>احترام المواعيد وخاصة أوقات الصلاة.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="quran-section">
+            <h2>تعليم القرآن الكريم</h2>
+            <div class="quran-verse">
+                ﴿وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِن مُّدَّكِرٍ﴾
+            </div>
+            <div class="quran-ref">سورة القمر - الآية 17</div>
+            <p>نعلم الأطفال تلاوة القرآن الكريم بطريقة سهلة ومحببة، بدءاً من السور القصيرة حتى يتمكنوا من حفظها وفهم معانيها.</p>
+        </section>
+        
+        <section class="section">
+            <h2>أنشطة تعليمية ممتعة</h2>
+            
+            <div class="activity">
+                <span class="activity-icon">🎨</span>
+                <div>
+                    <h3>ركن التلوين الإسلامي</h3>
+                    <p>أوراق تلوين تحتوي على آيات قرآنية وأدعية وأشكال إسلامية لتعليم الأطفال أثناء التلوين.</p>
+                </div>
+            </div>
+            
+            <div class="activity">
+                <span class="activity-icon">🎭</span>
+                <div>
+                    <h3>مسرحيات تعليمية</h3>
+                    <p>عروض مسرحية قصيرة تقدم قيم إسلامية وقصص الأنبياء بأسلوب مبسط.</p>
+                </div>
+            </div>
+            
+            <div class="activity">
+                <span class="activity-icon">🎵</span>
+                <div>
+                    <h3>أناشيد إسلامية</h3>
+                    <p>أناشيد تعليمية عن أركان الإسلام والإيمان والأخلاق الحميدة.</p>
+                </div>
+            </div>
+            
+            <div class="activity">
+                <span class="activity-icon">🧩</span>
+                <div>
+                    <h3>ألعاب تعليمية</h3>
+                    <p>ألغاز وبطاقات تعليمية لتعليم الأحكام الشرعية البسيطة والأذكار اليومية.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+             <!-- Start Footer -->
+  <footer style="background-color: #001328;">
+    <div  class="container-fluid">
+      <div class="logo-content">
+        <img class="logoo" src="imgs/new/logo2.png" alt="Logo" />
+        <p>
+          انضم إلينا في تشكيل مستقبل مشرق! شاهد لماذا تختارنا العائلات في جميع أنحاء البلاد لتكون المدرسة التمهيدية الخاصة بهم.
+
+          العنوان: شارع عبدالله جاسر 93 الزهراء
+          
+          البريد الإلكتروني: info@medinakids.com
+          
+          الهاتف: 00966551105115
+        </p>
+      </div>
+      <div class="links">
+        <div class="link">
+          <h3>روابط هامة</h3>
+          <ul >
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="#"> بيت جدتي</a></li>
+            <li><a href="#"> مهاراتي</a></li>
+            <li><a href="artcleIslam.html"> فرائض وأخلاق</a></li>
+
+
+          </ul>
+        </div>
+        <div class="link">
+          <h3>هيا نلعب</h3>
+          <ul>
+            <li><a href="learnAr.html"> لعبة تعلم العربية</a></li>
+            <li><a href="learnDigits.html">لعبة تعلم الأرقام</a></li>
+            <li><a href="eatingPlay.html">لعبة آداب الطعام </a></li>
+
+          </ul>
+        </div>
+
+        <div class="link">
+          <h3>اللغة</h3>
+          <ul>
+            <li><a >العربية</a></li>
+          </ul>
+        </div>
+
+
+
+      </div>
+      <div class="subscribe-us ">
+        <h3>مفالات مهمة</h3>
+       <div class="article d-flex flex-column gap-4">
+        <div class="item">
+         <div class="pic">
+          <img src="./imgs/new/Ar.jpg" alt="">
+          <div class="Fcover">
+<a href="./articleAr.html" class="fa-solid fa-link"></a>
+          </div>
+         </div>
+        
+          <p class="ptitle">
+            طرق فعّالة لتعليم الأطفال الحروف
+          </p>
+        </div>
+        <div class="item">
+         <div class="pic">
+          <img src="./imgs/new/dig.png" alt="">
+          <div class="Fcover">
+<a href="#" class="fa-solid fa-link"></a>
+          </div>
+         </div>
+        
+          <p class="ptitle">
+            طرق فعّالة لتعليم الأطفال الأرقام
+          </p>
+        </div>
+       </div>
+       
+      </div>
+    </div>
+
+    
+    <div class="copyright text-white">
+      حقوق النشر &copy; 2025 .Madina كل الحقوق محفوظة.
+    </div>
+  </footer>
+  <!-- End Footer --> 
+   
+</body>
+</html>

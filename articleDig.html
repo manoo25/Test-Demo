@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>تعليم الأرقام العربية للأطفال</title>
+    <style>
+        :root {
+            --primary-color: #E91E63;
+            --secondary-color: #F8BBD0;
+            --light-color: #FCE4EC;
+            --dark-color: #C2185B;
+            --text-color: #333;
+            --background-color: #FFF9FB;
+        }
+        
+        body {
+            font-family: 'Tajawal', 'Arial', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-top: 40px;
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        
+        .intro {
+            font-size: 1.2rem;
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-right: 5px solid var(--secondary-color);
+        }
+        
+        .number-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .number-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+           padding-bottom: 20px;
+           cursor: pointer;
+        }
+        
+        .number-card:hover {
+            transform: translateY(-5px);
+        }
+        
+
+        
+        .number-content {
+          
+            text-align: center;
+        }
+        
+        .number-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+           
+        }
+        
+        .arabic-number {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        
+        .english-number {
+            font-size: 2rem;
+            color: var(--dark-color);
+            margin: 0 15px;
+        }
+        
+        .number-word {
+            font-size: 1.5rem;
+            color: var(--dark-color);
+            margin: 10px 0;
+        }
+        
+        .objects-count {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .object {
+            font-size: 1.8rem;
+        }
+        
+        .activities {
+            background-color: var(--light-color);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 40px 0;
+        }
+        
+        .activity {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .activity-icon {
+            font-size: 2rem;
+            margin-left: 15px;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            margin-top: 50px;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .number-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .arabic-number {
+                font-size: 3rem;
+            }
+        }
+        .letter-sound {
+            font-size: 0.9rem;
+            color: var(--dark-color);
+            text-align: center;
+        }
+        .letter-display {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        .sound-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        .sound-btn:hover {
+            background-color: rgba(26, 138, 26, 0.856);
+           
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>تعليم الأرقام العربية للأطفال</h1>
+            <p class="text-white pt-3">رحلة ممتعة في عالم الأرقام من ١ إلى ١٠</p>
+            <a class="btn-outline-warning btn px-5 py-2 rounded-5 " href="./index.html">الرئيسية</a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="intro">
+            <h2>مرحباً بكم في عالم الأرقام!</h2>
+            <p>تعلم الأرقام هو الخطوة الأولى في رحلة الرياضيات. هذه الصفحة تساعد الأطفال على تعلم الأرقام العربية من ١ إلى ١٠ بطريقة ممتعة وسهلة مع صور وأمثلة توضيحية.</p>
+        </section>
+        
+        <section>
+            <h2>الأرقام من ٠ إلى ١٠</h2>
+            
+            <div class="number-section">
+                <!-- رقم 0 -->
+                <div class="number-card">
+                    <div class="number-content">
+                        <div class="number-display">
+                            <span class="arabic-number">٠</span>
+                            <span class="english-number">0</span>
+                        </div>
+                        <div class="number-word">صفر</div>
+                        <div class="objects-count">
+                            <span class="object">🤷</span>
+                        </div>
+                    </div>
+                    <button class="sound-btn" onclick="playSound('0')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                <!-- رقم 1 -->
+                <div class="number-card">
+                    <div class="number-content">
+                        <div class="number-display">
+                            <span class="arabic-number">١</span>
+                            <span class="english-number">1</span>
+                        </div>
+                        <div class="number-word">واحد</div>
+                        <div class="objects-count">
+                            <span class="object">🍎</span>
+                        </div>
+                    </div>
+                    <button class="sound-btn" onclick="playSound('1')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                
+                <!-- رقم 2 -->
+                <div class="number-card">
+                  
+                    <div class="number-content">
+                        <div class="number-display">
+                            <span class="arabic-number">٢</span>
+                            <span class="english-number">2</span>
+                        </div>
+                        <div class="number-word">اثنان</div>
+                        <div class="objects-count">
+                            <span class="object">🐦</span>
+                            <span class="object">🐦</span>
+                        </div>
+                    </div>
+                    <button class="sound-btn" onclick="playSound('2')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                
+                <!-- رقم 3 -->
+                <div class="number-card">
+               
+                    <div class="number-content">
+                        <div class="number-display">
+                            <span class="arabic-number">٣</span>
+                            <span class="english-number">3</span>
+                        </div>
+                        <div class="number-word">ثلاثة</div>
+                        <div class="objects-count">
+                            <span class="object">🚗</span>
+                            <span class="object">🚗</span>
+                            <span class="object">🚗</span>
+                        </div>
+                    </div>
+                    <button class="sound-btn" onclick="playSound('3')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                
+                <!-- رقم 4 -->
+                <div class="number-card">
+                  
+                    <div class="number-content">
+                        <div class="number-display">
+                            <span class="arabic-number">٤</span>
+                            <span class="english-number">4</span>
+                        </div>
+                        <div class="number-word">أربعة</div>
+                        <div class="objects-count">
+                            <span class="object">🐱</span>
+                            <span class="object">🐱</span>
+                            <span class="object">🐱</span>
+                            <span class="object">🐱</span>
+                        </div>
+                    </div>
+                    <button class="sound-btn" onclick="playSound('4')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                
+                <!-- رقم 5 -->
+                <div class="number-card">
+                  
+                    <div class="number-content">
+                        <div class="number-display">
+                            <span class="arabic-number">٥</span>
+                            <span class="english-number">5</span>
+                        </div>
+                        <div class="number-word">خمسة</div>
+                        <div class="objects-count">
+                            <span class="object">✋</span>
+                            <span class="object">⭐</span>
+                            <span class="object">⭐</span>
+                            <span class="object">⭐</span>
+                            <span class="object">⭐</span>
+                        </div>
+                    </div>
+                    <button class="sound-btn" onclick="playSound('5')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                
+                <!-- رقم 6 -->
+                <div class="number-card">
+                   
+                    <div class="number-content">
+                        <div class="number-display">
+                            <span class="arabic-number">٦</span>
+                            <span class="english-number">6</span>
+                        </div>
+                        <div class="number-word">ستة</div>
+                        <div class="objects-count">
+                            <span class="object">🎲</span>
+                            <span class="object">🎲</span>
+                            <span class="object">🎲</span>
+                            <span class="object">🎲</span>
+                            <span class="object">🎲</span>
+                            <span class="object">🎲</span>
+                        </div>
+                    </div>
+                    <button class="sound-btn" onclick="playSound('6')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                
+                <!-- رقم 7 -->
+                <div class="number-card">
+                   
+                    <div class="number-content">
+                        <div class="number-display">
+                            <span class="arabic-number">٧</span>
+                            <span class="english-number">7</span>
+                        </div>
+                        <div class="number-word">سبعة</div>
+                        <div class="objects-count">
+                            <span class="object">🌈</span>
+                            <span class="object">🌈</span>
+                            <span class="object">🌈</span>
+                            <span class="object">🌈</span>
+                            <span class="object">🌈</span>
+                            <span class="object">🌈</span>
+                            <span class="object">🌈</span>
+                        </div>
+                    </div>
+                    <button class="sound-btn" onclick="playSound('7')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                
+                <!-- رقم 8 -->
+                <div class="number-card">
+                   
+                    <div class="number-content">
+                        <div class="number-display">
+                            <span class="arabic-number">٨</span>
+                            <span class="english-number">8</span>
+                        </div>
+                        <div class="number-word">ثمانية</div>
+                        <div class="objects-count">
+                            <span class="object">🐙</span>
+                            <span class="object">🐙</span>
+                            <span class="object">🐙</span>
+                            <span class="object">🐙</span>
+                            <span class="object">🐙</span>
+                            <span class="object">🐙</span>
+                            <span class="object">🐙</span>
+                            <span class="object">🐙</span>
+                        </div>
+                    </div>
+                    <button class="sound-btn" onclick="playSound('8')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                
+                <!-- رقم 9 -->
+                <div class="number-card">
+                  
+                    <div class="number-content">
+                        <div class="number-display">
+                            <span class="arabic-number">٩</span>
+                            <span class="english-number">9</span>
+                        </div>
+                        <div class="number-word">تسعة</div>
+                        <div class="objects-count">
+                            <span class="object">🎈</span>
+                            <span class="object">🎈</span>
+                            <span class="object">🎈</span>
+                            <span class="object">🎈</span>
+                            <span class="object">🎈</span>
+                            <span class="object">🎈</span>
+                            <span class="object">🎈</span>
+                            <span class="object">🎈</span>
+                            <span class="object">🎈</span>
+                        </div>
+                    </div>
+                    <button class="sound-btn" onclick="playSound('9')"><i class="fas fa-volume-up"></i></button>
+                </div>
+                
+                <!-- رقم 10 -->
+                <div class="number-card">
+                    <div class="number-content">
+                        <div class="number-display">
+                            <span class="arabic-number">١٠</span>
+                            <span class="english-number">10</span>
+                        </div>
+                        <div class="number-word">عشرة</div>
+                        <div class="objects-count">
+                            <span class="object">🐱</span>
+                            <span class="object">🐱</span>
+                            <span class="object">🐱</span>
+                            <span class="object">🐱</span>
+                            <span class="object">🐱</span>
+                            <span class="object">🐱</span>
+                            <span class="object">🐱</span>
+                            <span class="object">🐱</span>
+                            <span class="object">🐱</span>
+                            <span class="object">🐱</span>
+                        </div>
+                    </div>
+                    <button class="sound-btn" onclick="playSound('10')"><i class="fas fa-volume-up"></i></button>
+                </div>
+            </div>
+        </section>
+        
+        <section class="activities">
+            <h2>أنشطة ممتعة لتعلم الأرقام</h2>
+            
+            <div class="activity">
+                <span class="activity-icon">🎨</span>
+                <div>
+                    <strong>تلوين الأرقام:</strong>
+                    <p>اطبع أوراق تلوين تحتوي على الأرقام العربية واطلب من طفلك تلوينها مع تكرار اسم الرقم.</p>
+                </div>
+            </div>
+            
+            <div class="activity">
+                <span class="activity-icon">🧩</span>
+                <div>
+                    <strong>لعبة المطابقة:</strong>
+                    <p>اصنع بطاقات تحتوي على الأرقام العربية وكميات متطابقة من الأشياء واطلب من طفلك مطابقتها.</p>
+                </div>
+            </div>
+            
+            <div class="activity">
+                <span class="activity-icon">🎵</span>
+                <div>
+                    <strong>أناشيد الأرقام:</strong>
+                    <p>استمع مع طفلك لأناشيد الأرقام العربية التي تساعد في حفظها بطريقة ممتعة.</p>
+                </div>
+            </div>
+            
+            <div class="activity">
+                <span class="activity-icon">🛒</span>
+                <div>
+                    <strong>عد الأشياء اليومية:</strong>
+                    <p>شجع طفلك على عد الأشياء حوله مثل الدرجات عند الصعود أو اللعب عند الترتيب.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+             <!-- Start Footer -->
+  <footer style="background-color: #001328;">
+    <div  class="container-fluid">
+      <div class="logo-content">
+        <img class="logoo" src="imgs/new/logo2.png" alt="Logo" />
+        <p>
+          انضم إلينا في تشكيل مستقبل مشرق! شاهد لماذا تختارنا العائلات في جميع أنحاء البلاد لتكون المدرسة التمهيدية الخاصة بهم.
+
+          العنوان: شارع عبدالله جاسر 93 الزهراء
+          
+          البريد الإلكتروني: info@medinakids.com
+          
+          الهاتف: 00966551105115
+        </p>
+      </div>
+      <div class="links">
+        <div class="link">
+          <h3>روابط هامة</h3>
+          <ul >
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="#"> بيت جدتي</a></li>
+            <li><a href="#"> مهاراتي</a></li>
+            <li><a href="artcleIslam.html"> فرائض وأخلاق</a></li>
+
+
+          </ul>
+        </div>
+        <div class="link">
+          <h3>هيا نلعب</h3>
+          <ul>
+            <li><a href="learnAr.html"> لعبة تعلم العربية</a></li>
+            <li><a href="learnDigits.html">لعبة تعلم الأرقام</a></li>
+            <li><a href="eatingPlay.html">لعبة آداب الطعام </a></li>
+
+          </ul>
+        </div>
+
+        <div class="link">
+          <h3>اللغة</h3>
+          <ul>
+            <li><a >العربية</a></li>
+          </ul>
+        </div>
+
+
+
+      </div>
+      <div class="subscribe-us ">
+        <h3>مفالات مهمة</h3>
+       <div class="article d-flex flex-column gap-4">
+        <div class="item">
+         <div class="pic">
+          <img src="./imgs/new/Ar.jpg" alt="">
+          <div class="Fcover">
+<a href="./articleAr.html" class="fa-solid fa-link"></a>
+          </div>
+         </div>
+        
+          <p class="ptitle">
+            طرق فعّالة لتعليم الأطفال الحروف
+          </p>
+        </div>
+        <div class="item">
+         <div class="pic">
+          <img src="./imgs/new/dig.png" alt="">
+          <div class="Fcover">
+<a href="#" class="fa-solid fa-link"></a>
+          </div>
+         </div>
+        
+          <p class="ptitle">
+            طرق فعّالة لتعليم الأطفال الأرقام
+          </p>
+        </div>
+       </div>
+       
+      </div>
+    </div>
+
+    
+    <div class="copyright text-white">
+      حقوق النشر &copy; 2025 .Madina كل الحقوق محفوظة.
+    </div>
+  </footer>
+  <!-- End Footer -->
+
+  <script>
+    function playSound(letter) {
+       const sounds = {
+           '0': './imgs/Dig-audio/صفر.mp3',
+           '1': './imgs/Dig-audio/واحد.mp3',
+           '2': './imgs/Dig-audio/إثنان.mp3',
+           '3': './imgs/Dig-audio/ثلاثة.mp3',
+           '4': './imgs/Dig-audio/اربعة.mp3',
+           '5': './imgs/Dig-audio/خمسة.mp3',
+           '6': './imgs/Dig-audio/سته.mp3',
+           '7': './imgs/Dig-audio/سبعة.mp3',
+           '8': './imgs/Dig-audio/ثمانية.mp3',
+           '9': './imgs/Dig-audio/تسعة.mp3',
+           '10': './imgs/Dig-audio/عشرة.mp3',
+         
+       
+       };
+   
+       if (sounds[letter]) {
+           const audio = new Audio(sounds[letter]);
+           audio.play().catch(error => console.error("فشل تشغيل الصوت:", error));
+       } else {
+           console.warn("لا يوجد صوت لهذا الحرف:", letter);
+       }
+   }
+   
+   
+       </script>
+</body>
+</html>
