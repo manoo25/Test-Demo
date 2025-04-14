@@ -1149,7 +1149,7 @@ color: white;
         background-attachment: scroll;
     }
    .porto .cover ,.portots .cover{
- 
+ padding: 5vh 0;
     background-color: #F45D96;
 }
  
