@@ -1145,7 +1145,7 @@ color: white;
         }
 
 @supports (-webkit-touch-callout: none) {
-    .home ,.porto {
+    .home  {
         background-attachment: scroll;
     }
    .porto {
