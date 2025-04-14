@@ -304,6 +304,11 @@
                 updateUI();
                 loadLevel();
                 createDecorations();
+                
+                // إعادة تعيين زر التالي إلى حالته الأصلية
+                nextBtn.textContent = 'التالي';
+                nextBtn.onclick = nextLevel;
+                nextBtn.disabled = true;
             }
             
             // تحميل المستوى الحالي
@@ -443,6 +448,7 @@
             function updateUI() {
                 levelEl.textContent = currentLevel + 1;
                 scoreEl.textContent = score;
+              
             }
             
             // تحديث شريط التقدم
@@ -453,6 +459,9 @@
             
             // إنشاء زخارف عائمة
             function createDecorations() {
+                // إزالة الزخارف القديمة أولاً
+                document.querySelectorAll('.decoration').forEach(el => el.remove());
+                
                 const decorations = ['🌸', '🌟', '🎀', '🦄', '🍭', '🎈', '🐰', '🌈'];
                 
                 for (let i = 0; i < 15; i++) {
@@ -476,9 +485,6 @@
                 }
                 return array;
             }
-            
-            // إضافة مستمعين للأحداث
-            nextBtn.addEventListener('click', nextLevel);
             
             // بدء اللعبة
             initGame();
