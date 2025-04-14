@@ -93,6 +93,15 @@ html {
     background-attachment: fixed;
 
 }
+/* للاجهزة العادية */
+
+
+/* لأجهزة iOS فقط */
+@supports (-webkit-touch-callout: none) {
+    .home {
+        background-attachment: scroll;
+    }
+}
 
 .cover {
     width: 100%;
