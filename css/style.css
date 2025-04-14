@@ -1144,12 +1144,12 @@ color: white;
             animation-direction: alternate;
         }
 
-/* @supports (-webkit-touch-callout: none) {
+@supports (-webkit-touch-callout: none) {
     .home  {
-        background-attachment: fixed;
+        background-attachment: scroll;
     }
    
-} */
+}
 @supports (-webkit-touch-callout: none) {
     .porto  {
         background-attachment: scroll;
