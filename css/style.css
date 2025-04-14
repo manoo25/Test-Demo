@@ -94,14 +94,7 @@ html {
 
 }
 
-@supports (-webkit-touch-callout: none) {
-    .home ,.porto {
-        background-attachment: scroll;
-    }
-   .porto {
-        background-attachment: scroll;
-    }
-}
+
 
 .cover {
     width: 100%;
@@ -1150,3 +1143,12 @@ color: white;
             animation-iteration-count: infinite;
             animation-direction: alternate;
         }
+
+@supports (-webkit-touch-callout: none) {
+    .home ,.porto {
+        background-attachment: scroll;
+    }
+   .porto {
+        background-attachment: scroll;
+    }
+}
