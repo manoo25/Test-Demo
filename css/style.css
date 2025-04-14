@@ -1148,11 +1148,8 @@ color: white;
     .home  {
         background-attachment: scroll;
     }
-   
-}
-@supports (-webkit-touch-callout: none) {
     .porto  {
         background-attachment: scroll;
     }
-   
 }
+
