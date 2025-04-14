@@ -161,12 +161,13 @@
             transition: width 0.5s;
         }
         
-   
+        .game-over {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
-
-    
     <div class="game-container">
         <h1>🐾 لعبة الحيوانات الممتعة 🐾</h1>
         
@@ -184,7 +185,7 @@
             <!-- الحيوانات ستضاف هنا بالجافاسكريبت -->
         </div>
         
-        <button class="next-btn" id="next-btn" disabled>السؤال التالي</button>
+        <button class="next-btn" id="next-btn" disabled>التالي</button>
     </div>
     
     <div class="celebration" id="celebration"></div>
@@ -196,47 +197,39 @@
                 question: "أي حيوان يقول 'مواء'؟",
                 correctAnimal: "قطة",
                 options: ["كلب", "قطة", "أسد", "بقرة"],
-              
             },
             {
                 question: "أي حيوان يعيش في الماء؟",
                 correctAnimal: "سمكة",
                 options: ["فيل", "سمكة", "زرافة", "دجاجة"],
-              
             },
             {
                 question: "أي حيوان يطير؟",
                 correctAnimal: "عصفور",
                 options: ["حصان", "تمساح", "عصفور", "سلحفاة"],
-               
             },
             {
                 question: "أي حيوان له رقبة طويلة؟",
                 correctAnimal: "زرافة",
                 options: ["فأر", "زرافة", "قرد", "بطريق"],
-                
             },
             {
                 question: "أي حيوان يعرف بملك الغابة؟",
                 correctAnimal: "أسد",
                 options: ["أسد", "نمر", "ذئب", "دب"],
-               
             },
             {
                 question: "أي حيوان يبيض؟",
                 correctAnimal: "دجاجة",
                 options: ["بقرة", "دجاجة", "كلب", "قطة"],
-                
             },
             {
                 question: "أي حيوان بطيء الحركة؟",
                 correctAnimal: "سلحفاة",
                 options: ["أرنب", "سلحفاة", "نمر", "غزال"],
-              
             }
         ];
         
-        // رموز الحيوانات (إيموجي)
         const animalEmojis = {
             "قطة": "🐱",
             "كلب": "🐶",
@@ -260,13 +253,9 @@
             "غزال": "🦌"
         };
         
-        // متغيرات اللعبة
         let currentQuestionIndex = 0;
         let score = 0;
         let selectedAnimal = null;
-        let soundEnabled = true;
-        
-        // عناصر DOM
         const questionElement = document.getElementById('question');
         const animalsContainer = document.getElementById('animals-container');
         const feedbackElement = document.getElementById('feedback');
@@ -274,10 +263,7 @@
         const nextButton = document.getElementById('next-btn');
         const celebrationElement = document.getElementById('celebration');
         const progressBar = document.getElementById('progress-bar');
-
-      
         
-        // تهيئة اللعبة
         function initGame() {
             currentQuestionIndex = 0;
             score = 0;
@@ -286,15 +272,9 @@
             loadQuestion(currentQuestionIndex);
         }
         
-        // تحميل السؤال
         function loadQuestion(index) {
             if (index >= questions.length) {
-                // انتهت الأسئلة
-                questionElement.textContent = "🎉 أحسنت! لقد أكملت جميع الأسئلة! 🎉";
-                animalsContainer.innerHTML = "";
-                feedbackElement.textContent = `درجتك النهائية: ${score} من ${questions.length}`;
-                nextButton.disabled = true;
-           
+                showGameOver();
                 return;
             }
             
@@ -304,8 +284,8 @@
             feedbackElement.className = "feedback";
             selectedAnimal = null;
             nextButton.disabled = true;
+            nextButton.textContent = "التالي";
             
-            // عرض خيارات الحيوانات
             animalsContainer.innerHTML = "";
             question.options.forEach(animal => {
                 const animalElement = document.createElement('div');
@@ -320,61 +300,64 @@
             });
         }
         
-        // اختيار حيوان
+        function showGameOver() {
+            questionElement.textContent = "🎉 أحسنت! لقد أكملت جميع الأسئلة! 🎉";
+            animalsContainer.innerHTML = "";
+            feedbackElement.textContent = `درجتك النهائية: ${score} من ${questions.length}`;
+            nextButton.disabled = false;
+            nextButton.textContent = "إعادة اللعبة";
+            progressBar.style.width = "100%";
+        }
+        
         function selectAnimal(animal, animalElement) {
             if (selectedAnimal !== null) return;
             
             selectedAnimal = animal;
             const question = questions[currentQuestionIndex];
             
-            // إزالة التحديد من جميع الحيوانات
             document.querySelectorAll('.animal').forEach(el => {
                 el.style.border = '3px solid #ffb6c1';
                 el.style.transform = 'scale(1)';
             });
             
-            // تحديد الحيوان المختار
             animalElement.style.border = '3px solid #ff4d94';
             animalElement.style.transform = 'scale(1.05)';
             
-            // التحقق من الإجابة
             if (animal === question.correctAnimal) {
                 feedbackElement.textContent = "أحسنت! إجابة صحيحة 🎉";
                 feedbackElement.className = "feedback correct";
                 score++;
                 updateScore();
                 createConfetti();
-              
             } else {
                 feedbackElement.textContent = `ليس صحيح! الجواب الصحيح هو ${question.correctAnimal}`;
                 feedbackElement.className = "feedback wrong";
-             
             }
             
             nextButton.disabled = false;
         }
         
-        // تحديث النقاط
         function updateScore() {
             scoreValueElement.textContent = score;
         }
         
-        // تحديث شريط التقدم
         function updateProgress() {
             const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
             progressBar.style.width = `${progress}%`;
         }
         
-        // الانتقال للسؤال التالي
         function nextQuestion() {
-            currentQuestionIndex++;
-            updateProgress();
-            loadQuestion(currentQuestionIndex);
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                updateProgress();
+                loadQuestion(currentQuestionIndex);
+            } else {
+                currentQuestionIndex++;
+                updateProgress();
+                loadQuestion(currentQuestionIndex);
+            }
         }
         
-    
-        
-        // تأثير الاحتفال (كونفيتي)
         function createConfetti() {
             celebrationElement.style.display = 'block';
             celebrationElement.innerHTML = '';
@@ -383,21 +366,17 @@
                 const confetti = document.createElement('div');
                 confetti.className = 'confetti';
                 
-                // ألوان عشوائية
                 const colors = ['#ff4d94', '#ff85b8', '#ffb6c1', '#ffd6e7', '#ffebf3', '#ffffff'];
                 const randomColor = colors[Math.floor(Math.random() * colors.length)];
                 confetti.style.backgroundColor = randomColor;
                 
-                // أحجام عشوائية
                 const size = Math.random() * 10 + 5;
                 confetti.style.width = `${size}px`;
                 confetti.style.height = `${size}px`;
                 
-                // مواقع عشوائية
                 confetti.style.left = `${Math.random() * 100}%`;
                 confetti.style.top = `${Math.random() * 100}%`;
                 
-                // حركة عشوائية
                 const animationDuration = Math.random() * 3 + 2;
                 confetti.style.animation = `fall ${animationDuration}s linear forwards`;
                 
@@ -409,7 +388,6 @@
             }, 3000);
         }
         
-        // إضافة أنيميشن للكونفيتي
         const style = document.createElement('style');
         style.textContent = `
             @keyframes fall {
@@ -421,11 +399,14 @@
         `;
         document.head.appendChild(style);
         
-        // أحداث الأزرار
-        nextButton.addEventListener('click', nextQuestion);
-     
+        nextButton.addEventListener('click', function() {
+            if (currentQuestionIndex < questions.length) {
+                nextQuestion();
+            } else {
+                initGame();
+            }
+        });
         
-        // بدء اللعبة
         initGame();
     </script>
 </body>
