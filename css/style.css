@@ -712,7 +712,7 @@ color: #FE5A91;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+/*     background-attachment: fixed; */
 height: 85vh;
 }
 
@@ -1148,8 +1148,6 @@ color: white;
     .home  {
         background-attachment: scroll;
     }
-    .porto  {
-        background-attachment: scroll;
-    }
+ 
 }
 
