@@ -95,7 +95,7 @@ html {
 }
 
 @supports (-webkit-touch-callout: none) {
-    .home {
+    .home ,.porto {
         background-attachment: fixed;
     }
 }
