@@ -98,6 +98,9 @@ html {
     .home ,.porto {
         background-attachment: scroll;
     }
+   .porto {
+        background-attachment: scroll;
+    }
 }
 
 .cover {
