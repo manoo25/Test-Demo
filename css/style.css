@@ -717,6 +717,7 @@ height: 85vh;
 }
 
  .porto .cover ,.portots .cover{
+    background-attachment: fixed;
    padding: 18vh 0;
     width: 100%;
     height: 100%;
